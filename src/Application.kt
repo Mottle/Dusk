@@ -12,7 +12,9 @@ import io.ktor.routing.*
 import kotlinx.css.CSSBuilder
 import moe.liar.page.MainLayout
 import moe.liar.page.NavBar
+import moe.liar.page.build
 import moe.liar.utils.none
+import moe.liar.utils.some
 import org.slf4j.event.Level
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
@@ -38,12 +40,15 @@ fun Application.module(testing: Boolean = false) {
             )
         }
     }
-    val layout = MainLayout(none(), none(), none())
+    val layout = MainLayout("/static".some(), none(), none())
     routing {
         get("/") {
             call.respondHtml {
-                layout(this, NavBar())
+                layout.build(this, ::NavBar)
             }
+        }
+        get("/favicon.ico") {
+            call.respondRedirect("/static/favicon.png")
         }
         static("/static") {
             resources("static")

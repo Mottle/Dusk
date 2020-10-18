@@ -9,21 +9,24 @@ import moe.liar.utils.some
 interface Layout : (HTML, Page) -> Unit
 
 class MainLayout(
-    private val static: Option<String>,
+    val static: Option<String>,
     private val mainScript: Option<String>,
     private val mainStyle: Option<String>
 ) : Layout {
+
+
     override fun invoke(html: HTML, page: Page) = with(html) {
         head {
             unsafe {
                 +"<meta charset=\"utf-8\" />"
                 +"<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">"
             }
-            unsafe {
-                +"<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css\" integrity=\"sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk\" crossorigin=\"anonymous\">"
-            }
-            if(!static.isNone() && !mainStyle.isNone()) styleLink("${static.forceGet()}/${mainStyle.forceGet()}")
+//            unsafe {
+//                +"<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css\" integrity=\"sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk\" crossorigin=\"anonymous\">"
+//            }
+            title("薄暮")
             static.flatMap {
+                styleLink("$it/bootstrap.min.css")
                 mainStyle.flatMap { _style ->
                     styleLink("$it/$_style").some()
                 }
@@ -44,4 +47,9 @@ class MainLayout(
             }
         }
     }
+}
+
+fun <P: Page> MainLayout.build(html: HTML, fn: (Option<String>) -> P) {
+    val page = fn(static)
+    this(html, page)
 }
