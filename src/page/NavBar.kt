@@ -1,10 +1,7 @@
 package moe.liar.page
 
 import io.ktor.http.*
-import kotlinx.css.CSSBuilder
-import kotlinx.css.Position
-import kotlinx.css.pct
-import kotlinx.css.px
+import kotlinx.css.*
 import kotlinx.html.*
 import moe.liar.utils.*
 
@@ -18,10 +15,11 @@ class NavBar(override val static: Option<String> = none()) : Page {
     }
 
     private fun bodyHeader(header: HEADER) = with(header) {
-        val `navbar-toggler` = "navbar"
-        div("navbar navbar-expand-lg navbar-light bg-light fix-top") {
+        val `navbar-toggler` = "navbarColor01"
+        nav("navbar navbar-expand-lg navbar-light bg-light fix-top") {
             id = "top-bar"
             a(href = "/", classes = "navbar-brand") {
+                id = "brand"
                 static.map {
                     img(src = "$it/logo.png") {
                         width = "30px"
@@ -59,18 +57,21 @@ class NavBar(override val static: Option<String> = none()) : Page {
                 rule("#top-bar") {
                     fontSize = 20.px
                     width = 100.pct
-                    height = 70.px
+                    height = LinearDimension.auto
+                    opacity = 1
+                }
+
+                rule("#brand") {
+                    fontSize = 25.px
                 }
 
                 rule(".fix-top") {
-                    position = Position.fixed
                     top = 0.px
                     left = 0.px
                 }
-
-//                rule(".hide") {
-//                    top = (-1000).px
-//                }
+            }
+            unsafe {
+                +".fix-top {position: fixed !important}"
             }
         }
     }

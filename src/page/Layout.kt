@@ -7,8 +7,8 @@ interface Layout : (HTML, Page) -> Unit
 
 class MainLayout(
     val static: Option<String>,
-    private val mainScript: Option<String>,
-    private val mainStyle: Option<String>
+    private val scripts: List<String>,
+    private val styles: List<String>
 ) : Layout {
 
 
@@ -23,17 +23,17 @@ class MainLayout(
 //            }
             title("薄暮")
             static.map {
-                styleLink("$it/bootstrap.min.css")
-                mainStyle.map { _style ->
-                    styleLink("$it/$_style")
+                styleLink("$it/css/bootstrap.min.css")
+                styles.map { _style ->
+                    styleLink("$it/css/$_style")
                 }
             }
             page.head(this)
         }
         body {
             static.map {
-                mainScript.map { _script ->
-                    script(src = "$it/$_script") {}
+                scripts.map { _script ->
+                    script(src = "$it/js/$_script") {}
                 }
                 script(src = "$it/js/anime.min.js") {}
             }
