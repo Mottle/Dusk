@@ -55,7 +55,3 @@ fun Application.module(testing: Boolean = false) {
         }
     }
 }
-
-suspend inline fun ApplicationCall.respondCss(builder: CSSBuilder.() -> Unit) {
-    this.respondText(CSSBuilder().apply(builder).toString(), ContentType.Text.CSS)
-}

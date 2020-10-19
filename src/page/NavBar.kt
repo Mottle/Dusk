@@ -2,13 +2,11 @@ package moe.liar.page
 
 import io.ktor.http.*
 import kotlinx.css.CSSBuilder
+import kotlinx.css.Position
+import kotlinx.css.pct
 import kotlinx.css.px
 import kotlinx.html.*
-import moe.liar.utils.Option
-import moe.liar.utils.flatMap
-import moe.liar.utils.none
-import moe.liar.utils.some
-import org.slf4j.Logger
+import moe.liar.utils.*
 
 class NavBar(override val static: Option<String> = none()) : Page {
     override fun head(htmlHead: HEAD) = Unit
@@ -20,14 +18,15 @@ class NavBar(override val static: Option<String> = none()) : Page {
     }
 
     private fun bodyHeader(header: HEADER) = with(header) {
-        val `navbar-toggler` = "navbarColor03"
-        div("navbar navbar-expand-lg navbar-light bg-light top-bar") {
+        val `navbar-toggler` = "navbar"
+        div("navbar navbar-expand-lg navbar-light bg-light fix-top") {
+            id = "top-bar"
             a(href = "/", classes = "navbar-brand") {
-                static.flatMap {
+                static.map {
                     img(src = "$it/logo.png") {
                         width = "30px"
                         height = "30px"
-                    }.some()
+                    }
                 }
                 +"Outside"
             }
@@ -56,25 +55,29 @@ class NavBar(override val static: Option<String> = none()) : Page {
             }
         }
         style(type = ContentType.Text.CSS.toString()) {
-//            val css = CSSBuilder()
-//            with(CSSBuilder()) {
-//                rule(".top-bar") {
-//                    fontSize = 15.px
+            css {
+                rule("#top-bar") {
+                    fontSize = 20.px
+                    width = 100.pct
+                    height = 70.px
+                }
+
+                rule(".fix-top") {
+                    position = Position.fixed
+                    top = 0.px
+                    left = 0.px
+                }
+
+//                rule(".hide") {
+//                    top = (-1000).px
 //                }
-//            }
-//            println(css.toString())
-//            unsafe {
-//                +css.toString()
-//            }
-            unsafe {
-                +"""
-                    .top-bar { font-size:15px; }
-                """.trimIndent()
             }
         }
     }
 
-    override fun script(htmlBody: BODY) {
-        TODO("Not yet implemented")
+    override fun script(htmlBody: BODY): Unit = with(htmlBody) {
+        static.map {
+            script(src = "$it/js/navbar.js") {}
+        }
     }
 }

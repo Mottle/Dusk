@@ -1,10 +1,7 @@
 package moe.liar.page
 
 import kotlinx.html.*
-import moe.liar.utils.None
-import moe.liar.utils.Option
-import moe.liar.utils.flatMap
-import moe.liar.utils.some
+import moe.liar.utils.*
 
 interface Layout : (HTML, Page) -> Unit
 
@@ -25,19 +22,20 @@ class MainLayout(
 //                +"<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css\" integrity=\"sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk\" crossorigin=\"anonymous\">"
 //            }
             title("薄暮")
-            static.flatMap {
+            static.map {
                 styleLink("$it/bootstrap.min.css")
-                mainStyle.flatMap { _style ->
-                    styleLink("$it/$_style").some()
+                mainStyle.map { _style ->
+                    styleLink("$it/$_style")
                 }
             }
             page.head(this)
         }
         body {
-            static.flatMap {
-                mainScript.flatMap { _script ->
-                    script(src = "$it/$_script") {}.some()
+            static.map {
+                mainScript.map { _script ->
+                    script(src = "$it/$_script") {}
                 }
+                script(src = "$it/js/anime.min.js") {}
             }
             page.body(this)
             unsafe {
@@ -45,6 +43,7 @@ class MainLayout(
                 +"<script src=\"https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js\" integrity=\"sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo\" crossorigin=\"anonymous\"></script>"
                 +"<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js\" integrity=\"sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI\" crossorigin=\"anonymous\"></script>"
             }
+            page.script(this)
         }
     }
 }
