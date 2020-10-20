@@ -1,13 +1,12 @@
 package moe.liar.page
 
-import kotlinx.css.BackgroundRepeat
-import kotlinx.css.Color
+import kotlinx.css.*
 import kotlinx.css.properties.*
-import kotlinx.css.px
 import kotlinx.html.*
 import moe.liar.utils.Option
 import moe.liar.utils.css
 import moe.liar.utils.map
+import org.w3c.dom.Text
 
 class Jumbotron(override val static: Option<String>) : Page {
     override fun head(htmlHead: HEAD) = Unit
@@ -15,9 +14,12 @@ class Jumbotron(override val static: Option<String>) : Page {
     override fun body(htmlBody: BODY) = with(htmlBody) {
         div("jumbotron jumbotron-fluid vh-100") {
             id = "jumbotron"
-            div("container") {
-                div("display-2") {
+            div("container focus-info") {
+                h1("display-1 center-info row") {
                     +"Hello world"
+                }
+                p("display-4 center-info row") {
+                    +"hello world to you"
                 }
             }
         }
@@ -27,12 +29,6 @@ class Jumbotron(override val static: Option<String>) : Page {
                     animation(
                         name = "jumbotron-jump",
                         duration = 1.s,
-//                        timing = Timing.ease,
-//                        delay = 0.s,
-//                        iterationCount = IterationCount("1"),
-//                        direction = AnimationDirection.normal,
-//                        fillMode = FillMode.none,
-//                        playState = PlayState.running
                     )
                     border = "0"
                     marginBottom = 0.px
@@ -43,6 +39,20 @@ class Jumbotron(override val static: Option<String>) : Page {
                         backgroundRepeat = BackgroundRepeat.noRepeat
                         backgroundSize = "cover"
                     }
+                }
+
+                rule(".focus-info") {
+                    position = Position.relative
+                    top = 30.pct
+                }
+
+                rule(".focus-info .display-4") {
+                    fontSize = LinearDimension("2rem")
+                }
+
+                rule(".center-info") {
+                    textAlign = TextAlign.center
+                    justifyContent = JustifyContent.center
                 }
             }
         }

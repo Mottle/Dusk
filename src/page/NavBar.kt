@@ -15,53 +15,29 @@ class NavBar(override val static: Option<String> = none()) : Page {
     }
 
     private fun bodyHeader(header: HEADER) = with(header) {
-        val `navbar-toggler` = "navbarColor01"
-        nav("navbar navbar-expand-lg navbar-light bg-light fix-top") {
-            id = "top-bar"
-            a(href = "/", classes = "navbar-brand") {
-                id = "brand"
-                static.map {
-                    img(src = "$it/logo.png") {
-                        width = "30px"
-                        height = "30px"
-                    }
-                }
-                +"Outside"
-            }
-            button(classes = "navbar-toggler", type = ButtonType.button) {
-                attributes["data-toggle"] = "collapse"
-                attributes["data-target"] = "#${`navbar-toggler`}"
-                attributes["aria-controls"] = `navbar-toggler`
-                attributes["aria-expanded"] = "false"
-                attributes["aria-label"] = "Toggle navigation"
-                span("navbar-toggler-icon")
-            }
-            div("collapse navbar-collapse") {
-                id = `navbar-toggler`
-                ul("navbar-nav mr-aut") {
-                    li("nav-item") {
-                        a(classes = "nav-link", href = "#") {
-                            +"Home"
-                        }
-                    }
-                    li("nav-item") {
-                        a(classes = "nav-link", href = "#") {
-                            +"about"
-                        }
-                    }
-                }
+        div("d-none d-lg-block") {
+            nav("navbar navbar-expand-lg navbar-light bg-light fix-top top-bar") {
+                id = "top-bar"
+                nav(this)
             }
         }
+        div("d-lg-none") {
+            nav("navbar navbar-expand-lg navbar-light bg-light fix-top top-bar") {
+                nav(this)
+            }
+        }
+
         style(type = ContentType.Text.CSS.toString()) {
             css {
-                rule("#top-bar") {
+                rule(".top-bar") {
+                    zIndex = 1000
                     fontSize = 20.px
                     width = 100.pct
                     height = LinearDimension.auto
-                    opacity = 1
+                    opacity = 0.8
                 }
 
-                rule("#brand") {
+                rule(".topbar-brand") {
                     fontSize = 25.px
                 }
 
@@ -74,11 +50,47 @@ class NavBar(override val static: Option<String> = none()) : Page {
                 +".fix-top {position: fixed !important}"
             }
         }
+
     }
 
     override fun script(htmlBody: BODY): Unit = with(htmlBody) {
         static.map {
             script(src = "$it/js/navbar.js") {}
+        }
+    }
+
+    private fun nav(nv: NAV) = with(nv) {
+        a(href = "/", classes = "navbar-brand topbar-brand") {
+            static.map {
+                img(src = "$it/logo.png") {
+                    width = "30px"
+                    height = "30px"
+                }
+            }
+            +"Outside"
+        }
+        button(classes = "navbar-toggler", type = ButtonType.button) {
+            attributes["data-toggle"] = "collapse"
+            attributes["data-target"] = "#navbarColor01"
+            attributes["aria-controls"] = "navbarColor01"
+            attributes["aria-expanded"] = "false"
+            attributes["aria-label"] = "Toggle navigation"
+            span("navbar-toggler-icon")
+        }
+        div("collapse navbar-collapse") {
+            id = "navbarColor01"
+            ul("navbar-nav mr-aut") {
+                li("nav-item") {
+                    a(classes = "nav-link", href = "#") {
+                        +"Home"
+                    }
+                }
+                li("nav-item") {
+                    a(classes = "nav-link", href = "#") {
+                        +"about"
+                    }
+                }
+            }
         }
     }
 }

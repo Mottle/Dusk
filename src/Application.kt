@@ -42,17 +42,20 @@ fun Application.module(testing: Boolean = false) {
     val combiner = CombinePage("/static".some())
     combiner.combine(::NavBar)
     combiner.combine(::Jumbotron)
+    combiner.combine(::GoTop)
     routing {
         get("/") {
             call.respondHtml {
                 layout(this, combiner)
             }
         }
-        get("/favicon.ico") {
-            call.respondRedirect("/static/favicon.png")
-        }
         static("/static") {
             resources("static")
         }
+        get("/favicon.ico") {
+            log.info("log for ic")
+            call.respondRedirect("/static/favicon.png")
+        }
+
     }
 }
