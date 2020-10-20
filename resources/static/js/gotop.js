@@ -1,4 +1,3 @@
-
 const goTopBtn = $('#go-top-btn')
 goTopBtn.click(e => {
     e.preventDefault();

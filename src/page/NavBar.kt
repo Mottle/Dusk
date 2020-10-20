@@ -1,9 +1,16 @@
 package moe.liar.page
 
 import io.ktor.http.*
-import kotlinx.css.*
+import kotlinx.css.LinearDimension
+import kotlinx.css.pct
+import kotlinx.css.properties.s
+import kotlinx.css.properties.transition
+import kotlinx.css.px
 import kotlinx.html.*
-import moe.liar.utils.*
+import moe.liar.utils.Option
+import moe.liar.utils.css
+import moe.liar.utils.map
+import moe.liar.utils.none
 
 class NavBar(override val static: Option<String> = none()) : Page {
     override fun head(htmlHead: HEAD) = Unit
@@ -34,7 +41,8 @@ class NavBar(override val static: Option<String> = none()) : Page {
                     fontSize = 20.px
                     width = 100.pct
                     height = LinearDimension.auto
-                    opacity = 0.8
+                    opacity = 0
+                    transition(property = "opacity", 0.5.s)
                 }
 
                 rule(".topbar-brand") {
@@ -44,6 +52,10 @@ class NavBar(override val static: Option<String> = none()) : Page {
                 rule(".fix-top") {
                     top = 0.px
                     left = 0.px
+                }
+
+                rule("#top-bar:hover") {
+                    opacity = 0.8
                 }
             }
             unsafe {

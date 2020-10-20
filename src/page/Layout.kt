@@ -1,7 +1,8 @@
 package moe.liar.page
 
 import kotlinx.html.*
-import moe.liar.utils.*
+import moe.liar.utils.Option
+import moe.liar.utils.map
 
 interface Layout : (HTML, Page) -> Unit
 
@@ -49,7 +50,7 @@ class MainLayout(
     }
 }
 
-fun <P: Page> MainLayout.build(html: HTML, fn: (Option<String>) -> P) {
+fun <P : Page> MainLayout.build(html: HTML, fn: (Option<String>) -> P) {
     val page = fn(static)
     this(html, page)
 }

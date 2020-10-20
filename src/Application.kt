@@ -9,9 +9,7 @@ import io.ktor.locations.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
-import kotlinx.css.CSSBuilder
 import moe.liar.page.*
-import moe.liar.utils.none
 import moe.liar.utils.some
 import org.slf4j.event.Level
 
@@ -43,6 +41,7 @@ fun Application.module(testing: Boolean = false) {
     combiner.combine(::NavBar)
     combiner.combine(::Jumbotron)
     combiner.combine(::GoTop)
+    combiner.combine(::ArticleContent)
     routing {
         get("/") {
             call.respondHtml {

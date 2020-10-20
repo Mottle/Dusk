@@ -1,12 +1,12 @@
 package moe.liar.page
 
 import kotlinx.css.*
-import kotlinx.css.properties.*
+import kotlinx.css.properties.animation
+import kotlinx.css.properties.s
 import kotlinx.html.*
 import moe.liar.utils.Option
 import moe.liar.utils.css
 import moe.liar.utils.map
-import org.w3c.dom.Text
 
 class Jumbotron(override val static: Option<String>) : Page {
     override fun head(htmlHead: HEAD) = Unit

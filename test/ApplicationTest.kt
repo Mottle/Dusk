@@ -1,21 +1,9 @@
 package moe.liar
 
-import io.ktor.application.*
-import io.ktor.response.*
-import io.ktor.request.*
-import io.ktor.routing.*
 import io.ktor.http.*
-import io.ktor.html.*
-import kotlinx.html.*
-import kotlinx.css.*
-import io.ktor.content.*
-import io.ktor.http.content.*
-import io.ktor.locations.*
-import io.ktor.features.*
-import org.slf4j.event.*
-import io.ktor.auth.*
-import kotlin.test.*
 import io.ktor.server.testing.*
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class ApplicationTest {
     @Test
