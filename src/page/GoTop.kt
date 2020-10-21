@@ -31,7 +31,7 @@ class GoTop(override val static: Option<String>) : Page {
                     right = 100.px
                     paddingLeft = 6.px
                     paddingRight = 6.px
-                    opacity = 0.5
+                    opacity = 0
                 }
             }
         }

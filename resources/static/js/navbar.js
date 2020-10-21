@@ -1,17 +1,15 @@
 const topBar = $('#top-bar')
 // topBar.css('opacity', 0)
 const topBarMaxOpacity = 0.8
-const topBarHeight = topBar.css("height")
+const topBarHeight = 70
 let lockTopBarShown = false
 
 $(window).scroll(() => {
     const offset = parseInt($(window).scrollTop())
-    console.log("scroll " + offset.toString())
+    // console.log('scroll ' + offset.toString())
     if (offset >= topBarHeight) {
-        if (!lockTopBarShown) {
-            lockTopBarShown = true
-        }
+        topBar.addClass('force-show')
     } else {
-        lockTopBarShown = false
+        topBar.removeClass('force-show')
     }
 })

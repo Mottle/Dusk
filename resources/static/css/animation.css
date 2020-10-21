@@ -13,3 +13,12 @@
         transform: translateY(0);
     }
 }
+
+@keyframes delay-hide {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 0;
+    }
+}

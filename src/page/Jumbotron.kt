@@ -1,6 +1,7 @@
 package moe.liar.page
 
 import kotlinx.css.*
+import kotlinx.css.properties.Timing
 import kotlinx.css.properties.animation
 import kotlinx.css.properties.s
 import kotlinx.html.*
@@ -43,7 +44,41 @@ class Jumbotron(override val static: Option<String>) : Page {
 
                 rule(".focus-info") {
                     position = Position.relative
+                    opacity = 1
                     top = 30.pct
+                    animation(
+                        name = "delay-hide",
+                        duration = 1.s
+                    )
+                    animation(
+                        name = "jumbotron-jump",
+                        duration = 1.s,
+                        delay = 1.s,
+                        timing = Timing.easeInOut
+                    )
+                }
+
+                rule(".focus-info .display-1") {
+                    animation(
+                        name = "jumbotron-jump",
+                        duration = 1.s,
+                        delay = 1.s,
+                        timing = Timing.easeInOut
+                    )
+                }
+
+                rule(".focus-info .display-4") {
+                    animation(
+                        name = "delay-hide",
+                        duration = 1.s,
+                        delay = 1.s
+                    )
+                    animation(
+                        name = "jumbotron-jump",
+                        duration = 1.s,
+                        delay = 2.s,
+                        timing = Timing.easeOut
+                    )
                 }
 
                 rule(".focus-info .display-4") {

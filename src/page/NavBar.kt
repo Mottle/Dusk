@@ -41,8 +41,13 @@ class NavBar(override val static: Option<String> = none()) : Page {
                     fontSize = 20.px
                     width = 100.pct
                     height = LinearDimension.auto
+                    opacity = 0.8
+                    transition(property = "opacity", duration = 0.5.s)
+                }
+
+                rule("#top-bar") {
                     opacity = 0
-                    transition(property = "opacity", 0.5.s)
+                    transition(property = "opacity", duration = 0.5.s)
                 }
 
                 rule(".topbar-brand") {
@@ -59,7 +64,8 @@ class NavBar(override val static: Option<String> = none()) : Page {
                 }
             }
             unsafe {
-                +".fix-top {position: fixed !important}"
+                +".fix-top { position: fixed !important }"
+                +".force-show { opacity: 1 !important }"
             }
         }
 
