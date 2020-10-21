@@ -3,10 +3,10 @@ package moe.liar.page
 import kotlinx.css.*
 import kotlinx.css.properties.*
 import kotlinx.html.*
+import moe.liar.model.ArticleData
 import moe.liar.utils.*
-import java.util.*
 
-class ArticleContent(override val static: Option<String>) : Page {
+class ArticleContent(override val static: Option<String>, private val data: List<ArticleData>) : Page {
     override fun head(htmlHead: HEAD): Unit = Unit
 
     override fun body(htmlBody: BODY) = with(htmlBody) {
@@ -14,30 +14,10 @@ class ArticleContent(override val static: Option<String>) : Page {
             div("row") {
                 div("col-lg") {}
                 div("col-lg-9") {
-                    articleCard(
-                        1,
-                        "title",
-                        "1111/11/1",
-                        "balabalbalbalbalbalbalbalbablababl",
-                        listOf("abd", "aaa", "aads"),
-                        "/static/logo.png".some()
-                    )
-                    articleCard(
-                        1,
-                        "title",
-                        "1111/11/1",
-                        "balabalbalbalbalbalbalbalbablababl",
-                        listOf("abd", "aaa", "aads"),
-                        "/static/logo.png".some()
-                    )
-                    articleCard(
-                        1,
-                        "title",
-                        "1111/11/1",
-                        "balabalbalbalbalbalbalbalbablababl", listOf("abd", "aaa", "aads"),
-
-                        "/static/logo.png".some()
-                    )
+                    data.forEach {
+                        articleCard(it)
+                    }
+                    articleCard(data.first())
                 }
                 div("col-lg") {}
             }
@@ -57,7 +37,7 @@ class ArticleContent(override val static: Option<String>) : Page {
 
                 rule(".card:hover") {
                     transform {
-                        scale(1.05, 1.05)
+                        scale(1.1, 1.1)
                     }
                 }
 
@@ -67,6 +47,23 @@ class ArticleContent(override val static: Option<String>) : Page {
 
                 rule(".card-preview") {
                     height = 100.px
+                }
+
+                //中大型屏幕
+                media("(min-width: 768px)") {
+                    rule(".img-limit") {
+                        borderRadius = LinearDimension("10px 0 0 10px")
+                    }
+
+                    rule(".card-arrangement") {
+                        textAlign = TextAlign.right
+                    }
+                }
+
+                media("(max-width: 767px)") {
+                    rule(".img-limit") {
+                        borderRadius = LinearDimension("10px 10px 0 0")
+                    }
                 }
             }
             unsafe {
@@ -87,39 +84,31 @@ class ArticleContent(override val static: Option<String>) : Page {
  * 生成指定文章的card
  * 文章的url由id生成: /article/id
  */
-private fun HtmlBlockTag.articleCard(
-    id: Int,
-    title: String,
-    date: String,
-    preview: String,
-    tags: List<String>,
-    imageUri: Option<String>
-) =
+private fun HtmlBlockTag.articleCard(articleData: ArticleData) =
     with(this) {
-        val link = "/article/$id"
+        val link = "/article/${articleData.articleId}"
         div("card shadow-sm") {
             div("row no-gutters") {
                 div("col-md-7 card-thumb") {
                     a(href = link) {
-                        img(classes = "card-img img-limit", src = imageUri.getOrElse("")) {
+                        img(classes = "card-img img-limit", src = "/static/img/${articleData.imageName.getOrElse("404")}") {
                             attributes["style"] = "object-fit: cover"
                         }
                     }
                 }
                 div("col-md-5") {
-                    div("card-body") {
+                    div("card-body card-arrangement") {
                         attributes["style"] = "height: 300px"
-                        h5("card-title") { +title }
-                        p("card-text") { small("text-muted") { +date } }
+                        h5("card-title") { +articleData.title }
+                        p("card-text") { small("text-muted") { +articleData.date } }
                         p("card-text") {
-                            tags.forEach {
+                            articleData.tags.forEach {
                                 span("badge badge-light") { +it }
                             }
                         }
 
-                        p("card-text card-preview") { +preview }
-                        a("link") {
-                            attributes["style"] = "float: right"
+                        p("card-text card-preview") { +articleData.preview }
+                        a(link) {
                             +"read more"
                         }
                     }

@@ -38,7 +38,7 @@ class NavBar(override val static: Option<String> = none()) : Page {
             css {
                 rule(".top-bar") {
                     zIndex = 1000
-                    fontSize = 20.px
+                    fontSize = LinearDimension("1rem")
                     width = 100.pct
                     height = LinearDimension.auto
                     opacity = 0.8
@@ -51,7 +51,7 @@ class NavBar(override val static: Option<String> = none()) : Page {
                 }
 
                 rule(".topbar-brand") {
-                    fontSize = 25.px
+                    fontSize = LinearDimension("1.4rem")
                 }
 
                 rule(".fix-top") {

@@ -9,6 +9,7 @@ import io.ktor.locations.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
+import moe.liar.model.ArticleData
 import moe.liar.page.*
 import moe.liar.utils.some
 import org.slf4j.event.Level
@@ -37,15 +38,18 @@ fun Application.module(testing: Boolean = false) {
         }
     }
     val layout = MainLayout("/static".some(), listOf(), listOf("animation.css"))
-    val combiner = CombinePage("/static".some())
-    combiner.combine(::NavBar)
-    combiner.combine(::Jumbotron)
-    combiner.combine(::GoTop)
-    combiner.combine(::ArticleContent)
+    val combiner = CombinerBuilder()
+    val page = combiner.combine(::NavBar).combine(::Jumbotron).combine(::GoTop).combine {
+        ArticleContent(it, listOf(
+            ArticleData(1, "ttt", "1111/11/1", "xxxxxx", listOf("a", "b"), "background.jpg".some()),
+            ArticleData(1, "ttt", "1111/11/1", "xxxxxx", listOf("a", "b"), "background.jpg".some()),
+            ArticleData(1, "ttt", "1111/11/1", "xxxxxx", listOf("a", "b"), "background.jpg".some())
+        ))
+    }.buildPage()
     routing {
         get("/") {
             call.respondHtml {
-                layout(this, combiner)
+                    layout.build(this, page)
             }
         }
         static("/static") {
