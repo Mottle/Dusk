@@ -10,6 +10,7 @@ import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import moe.liar.model.ArticleInfo
+import moe.liar.model.ImgRes
 import moe.liar.model.Link
 import moe.liar.page.*
 import moe.liar.utils.some
@@ -43,14 +44,18 @@ fun Application.module(testing: Boolean = false) {
     val layout = MainLayout("/static".some(), listOf(), listOf("animation.css"))
     val combiner = CombinerBuilder()
     val page = combiner.combine {
-        NavBar(it)
-    }.combine(::Jumbotron).combine(::GoTop).combine {
-        ArticleContent(it, listOf(
+        NavBar(
+            logo = ImgRes.path("logo.png").some()
+        )
+    }.combine {
+        Jumbotron(ImgRes.path("background.jpg").some())
+    }.combine(::GoTop).combine {
+        ArticleContent(listOf(
             ArticleInfo(1, "1", "1111/11/1", "xxxxxx", listOf("a", "b"), Link("https://random.52ecy.cn/randbg.php/${Random.nextInt()}?size=1").some()),
             ArticleInfo(2, "2", "1111/11/1", "xxxxxx", listOf("a", "b"), Link("https://random.52ecy.cn/randbg.php/${Random.nextInt()}?size=1").some()),
             ArticleInfo(3, "3", "1111/11/1", "xxxxxx", listOf("a", "b"), Link("https://random.52ecy.cn/randbg.php/${Random.nextInt()}?size=1").some())
         ))
-    }
+    }.combine(::Footer)
     routing {
         get("/") {
             call.respondHtml {

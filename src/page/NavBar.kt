@@ -7,12 +7,14 @@ import kotlinx.css.properties.s
 import kotlinx.css.properties.transition
 import kotlinx.css.px
 import kotlinx.html.*
+import moe.liar.model.JsRes
+import moe.liar.model.Resources
 import moe.liar.utils.Option
 import moe.liar.utils.css
 import moe.liar.utils.map
 import moe.liar.utils.none
 
-class NavBar(override val static: Option<String> = none(), private val forceShow: Boolean = false) : Page {
+class NavBar(private val logo: Option<Resources>, private val forceShow: Boolean = false) : Page {
     override fun head(htmlHead: HEAD) = Unit
 
     override fun body(htmlBody: BODY) {
@@ -74,15 +76,13 @@ class NavBar(override val static: Option<String> = none(), private val forceShow
     }
 
     override fun script(htmlBody: BODY): Unit = with(htmlBody) {
-        static.map {
-            script(src = "$it/js/navbar.js") {}
-        }
+        script(src = JsRes.path("navbar.js").uri()) {}
     }
 
     private fun nav(nv: NAV) = with(nv) {
         a(href = "/", classes = "navbar-brand topbar-brand") {
-            static.map {
-                img(src = "$it/logo.png") {
+            logo.map {
+                img(src = it.uri()) {
                     width = "30px"
                     height = "30px"
                 }

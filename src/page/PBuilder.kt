@@ -2,4 +2,4 @@ package moe.liar.page
 
 import moe.liar.utils.Option
 
-typealias PBuilder = (Option<String>) -> Page
+typealias PBuilder = () -> Page

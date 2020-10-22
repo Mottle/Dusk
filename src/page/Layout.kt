@@ -51,7 +51,7 @@ class MainLayout(
     }
 }
 
-fun <P : Page> MainLayout.build(html: HTML, fn: (Option<String>) -> P) {
-    val page = fn(static)
+fun <P : Page> MainLayout.build(html: HTML, fn: () -> P) {
+    val page = fn()
     this(html, page)
 }

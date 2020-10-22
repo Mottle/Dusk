@@ -5,11 +5,13 @@ import kotlinx.css.properties.Timing
 import kotlinx.css.properties.animation
 import kotlinx.css.properties.s
 import kotlinx.html.*
+import moe.liar.model.ImgRes
+import moe.liar.model.Resources
 import moe.liar.utils.Option
 import moe.liar.utils.css
 import moe.liar.utils.map
 
-class Jumbotron(override val static: Option<String>) : Page {
+class Jumbotron(private val backgroundImg: Option<Resources>) : Page {
     override fun head(htmlHead: HEAD) = Unit
 
     override fun body(htmlBody: BODY) = with(htmlBody) {
@@ -34,12 +36,13 @@ class Jumbotron(override val static: Option<String>) : Page {
                     border = "0"
                     marginBottom = 0.px
                     color = Color.white
-                    static.map {
-                        background = "url($it/img/background.jpg)"
-                        backgroundPosition = "center"
-                        backgroundRepeat = BackgroundRepeat.noRepeat
-                        backgroundSize = "cover"
+//                    background = "url(${backgroundImg.getOrElse("").uri()})"
+                    backgroundImg.map {
+                        background = "url(${it.uri()})"
                     }
+                    backgroundPosition = "center"
+                    backgroundRepeat = BackgroundRepeat.noRepeat
+                    backgroundSize = "cover"
                 }
 
                 rule(".focus-info") {

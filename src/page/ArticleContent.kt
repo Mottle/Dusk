@@ -8,7 +8,7 @@ import moe.liar.utils.*
 import java.util.*
 import kotlin.random.Random
 
-class ArticleContent(override val static: Option<String>, private val data: List<ArticleInfo>) : Page {
+class ArticleContent(private val data: List<ArticleInfo>) : Page {
     override fun head(htmlHead: HEAD): Unit = Unit
 
     override fun body(htmlBody: BODY) = with(htmlBody) {
