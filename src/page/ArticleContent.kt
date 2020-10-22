@@ -3,10 +3,12 @@ package moe.liar.page
 import kotlinx.css.*
 import kotlinx.css.properties.*
 import kotlinx.html.*
-import moe.liar.model.ArticleData
+import moe.liar.model.ArticleInfo
 import moe.liar.utils.*
+import java.util.*
+import kotlin.random.Random
 
-class ArticleContent(override val static: Option<String>, private val data: List<ArticleData>) : Page {
+class ArticleContent(override val static: Option<String>, private val data: List<ArticleInfo>) : Page {
     override fun head(htmlHead: HEAD): Unit = Unit
 
     override fun body(htmlBody: BODY) = with(htmlBody) {
@@ -17,7 +19,6 @@ class ArticleContent(override val static: Option<String>, private val data: List
                     data.forEach {
                         articleCard(it)
                     }
-                    articleCard(data.first())
                 }
                 div("col-lg") {}
             }
@@ -73,25 +74,22 @@ class ArticleContent(override val static: Option<String>, private val data: List
 
     }
 
-    override fun script(htmlBody: BODY) {
-    }
+    override fun script(htmlBody: BODY) = Unit
 }
 
 /**
- * @param title 文章名
- * @param date 文章发表日期
- * @param preview 文章预览
  * 生成指定文章的card
  * 文章的url由id生成: /article/id
  */
-private fun HtmlBlockTag.articleCard(articleData: ArticleData) =
+private fun HtmlBlockTag.articleCard(articleInfo: ArticleInfo) =
     with(this) {
-        val link = "/article/${articleData.articleId}"
+        val link = "/article/${articleInfo.articleId}"
         div("card shadow-sm") {
             div("row no-gutters") {
                 div("col-md-7 card-thumb") {
                     a(href = link) {
-                        img(classes = "card-img img-limit", src = "/static/img/${articleData.imageName.getOrElse("404")}") {
+                        img(classes = "card-img img-limit", src = articleInfo.imageRes.map { it.uri() }.getOrElse("")) {
+                            attributes["loading"] = "lazy"
                             attributes["style"] = "object-fit: cover"
                         }
                     }
@@ -99,15 +97,15 @@ private fun HtmlBlockTag.articleCard(articleData: ArticleData) =
                 div("col-md-5") {
                     div("card-body card-arrangement") {
                         attributes["style"] = "height: 300px"
-                        h5("card-title") { +articleData.title }
-                        p("card-text") { small("text-muted") { +articleData.date } }
+                        h5("card-title") { +articleInfo.title }
+                        p("card-text") { small("text-muted") { +articleInfo.date } }
                         p("card-text") {
-                            articleData.tags.forEach {
+                            articleInfo.tags.forEach {
                                 span("badge badge-light") { +it }
                             }
                         }
 
-                        p("card-text card-preview") { +articleData.preview }
+                        p("card-text card-preview") { +articleInfo.preview }
                         a(link) {
                             +"read more"
                         }

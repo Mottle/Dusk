@@ -12,7 +12,7 @@ import moe.liar.utils.css
 import moe.liar.utils.map
 import moe.liar.utils.none
 
-class NavBar(override val static: Option<String> = none()) : Page {
+class NavBar(override val static: Option<String> = none(), private val forceShow: Boolean = false) : Page {
     override fun head(htmlHead: HEAD) = Unit
 
     override fun body(htmlBody: BODY) {
@@ -24,12 +24,14 @@ class NavBar(override val static: Option<String> = none()) : Page {
     private fun bodyHeader(header: HEADER) = with(header) {
         div("d-none d-lg-block") {
             nav("navbar navbar-expand-lg navbar-light bg-light fix-top top-bar") {
+                if(forceShow) attributes["style"] = "opacity: 1"
                 id = "top-bar"
                 nav(this)
             }
         }
         div("d-lg-none") {
             nav("navbar navbar-expand-lg navbar-light bg-light fix-top top-bar") {
+                if(forceShow) attributes["style"] = "opacity: 1"
                 nav(this)
             }
         }

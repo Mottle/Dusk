@@ -9,10 +9,13 @@ import io.ktor.locations.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
-import moe.liar.model.ArticleData
+import moe.liar.model.ArticleInfo
+import moe.liar.model.Link
 import moe.liar.page.*
 import moe.liar.utils.some
 import org.slf4j.event.Level
+import java.util.*
+import kotlin.random.Random
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
@@ -39,17 +42,19 @@ fun Application.module(testing: Boolean = false) {
     }
     val layout = MainLayout("/static".some(), listOf(), listOf("animation.css"))
     val combiner = CombinerBuilder()
-    val page = combiner.combine(::NavBar).combine(::Jumbotron).combine(::GoTop).combine {
+    val page = combiner.combine {
+        NavBar(it)
+    }.combine(::Jumbotron).combine(::GoTop).combine {
         ArticleContent(it, listOf(
-            ArticleData(1, "ttt", "1111/11/1", "xxxxxx", listOf("a", "b"), "background.jpg".some()),
-            ArticleData(1, "ttt", "1111/11/1", "xxxxxx", listOf("a", "b"), "background.jpg".some()),
-            ArticleData(1, "ttt", "1111/11/1", "xxxxxx", listOf("a", "b"), "background.jpg".some())
+            ArticleInfo(1, "1", "1111/11/1", "xxxxxx", listOf("a", "b"), Link("https://random.52ecy.cn/randbg.php/${Random.nextInt()}?size=1").some()),
+            ArticleInfo(2, "2", "1111/11/1", "xxxxxx", listOf("a", "b"), Link("https://random.52ecy.cn/randbg.php/${Random.nextInt()}?size=1").some()),
+            ArticleInfo(3, "3", "1111/11/1", "xxxxxx", listOf("a", "b"), Link("https://random.52ecy.cn/randbg.php/${Random.nextInt()}?size=1").some())
         ))
-    }.buildPage()
+    }
     routing {
         get("/") {
             call.respondHtml {
-                    layout.build(this, page)
+                    layout.build(this, page.buildPage())
             }
         }
         static("/static") {

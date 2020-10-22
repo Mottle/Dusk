@@ -93,5 +93,5 @@ class Jumbotron(override val static: Option<String>) : Page {
         }
     }
 
-    override fun script(htmlBody: BODY) {}
+    override fun script(htmlBody: BODY) = Unit
 }
