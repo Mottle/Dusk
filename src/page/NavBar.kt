@@ -101,12 +101,12 @@ class NavBar(private val logo: Option<Resources>, private val forceShow: Boolean
             id = "navbarColor01"
             ul("navbar-nav mr-aut") {
                 li("nav-item") {
-                    a(classes = "nav-link", href = "#") {
+                    a(classes = "nav-link", href = "/") {
                         +"Home"
                     }
                 }
                 li("nav-item") {
-                    a(classes = "nav-link", href = "#") {
+                    a(classes = "nav-link", href = "/about") {
                         +"about"
                     }
                 }

@@ -5,17 +5,16 @@ import kotlinx.css.properties.Timing
 import kotlinx.css.properties.animation
 import kotlinx.css.properties.s
 import kotlinx.html.*
-import moe.liar.model.ImgRes
 import moe.liar.model.Resources
 import moe.liar.utils.Option
 import moe.liar.utils.css
 import moe.liar.utils.map
 
-class Jumbotron(private val backgroundImg: Option<Resources>) : Page {
+class Jumbotron(private val backgroundImg: Option<Resources>, private val heightPct: Int = 100) : Page {
     override fun head(htmlHead: HEAD) = Unit
 
     override fun body(htmlBody: BODY) = with(htmlBody) {
-        div("jumbotron jumbotron-fluid vh-100") {
+        div("jumbotron jumbotron-fluid") {
             id = "jumbotron"
             div("container focus-info") {
                 h1("display-1 center-info row") {
@@ -29,6 +28,7 @@ class Jumbotron(private val backgroundImg: Option<Resources>) : Page {
         style {
             css {
                 rule("#jumbotron") {
+                    height = heightPct.vh
                     animation(
                         name = "jumbotron-jump",
                         duration = 1.s,
@@ -36,7 +36,6 @@ class Jumbotron(private val backgroundImg: Option<Resources>) : Page {
                     border = "0"
                     marginBottom = 0.px
                     color = Color.white
-//                    background = "url(${backgroundImg.getOrElse("").uri()})"
                     backgroundImg.map {
                         background = "url(${it.uri()})"
                     }

@@ -7,7 +7,7 @@ let lockTopBarShown = false
 $(window).scroll(() => {
     const offset = parseInt($(window).scrollTop())
     // console.log('scroll ' + offset.toString())
-    if (offset >= topBarHeight) {
+    if (offset >= topBarHeight / 2) {
         topBar.addClass('force-show')
     } else {
         topBar.removeClass('force-show')

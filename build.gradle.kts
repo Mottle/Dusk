@@ -34,6 +34,10 @@ dependencies {
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
 }
 
+dependencies {
+    implementation("com.vladsch.flexmark:flexmark-all:0.62.2")
+}
+
 kotlin.sourceSets["main"].kotlin.srcDirs("src")
 kotlin.sourceSets["test"].kotlin.srcDirs("test")
 
