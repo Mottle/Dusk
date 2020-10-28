@@ -1,9 +1,7 @@
 package moe.liar.handler
 
 import io.ktor.locations.*
-import moe.liar.model.ArticleInfo
-import moe.liar.model.ImgRes
-import moe.liar.model.Link
+import moe.liar.model.*
 import moe.liar.page.*
 import moe.liar.utils.some
 import kotlin.random.Random
@@ -11,41 +9,17 @@ import kotlin.random.Random
 
 @KtorExperimentalLocationsAPI
 @Location("/")
-class IndexHandler : Handler {
-    override suspend fun handle(): PBuilder = CombinerBuilder().combine {
-        NavBar(
-            logo = ImgRes.path("logo.png").some()
-        )
-    }.combine {
-        Jumbotron(ImgRes.path("background.jpg").some())
-    }.combine(::GoTop).combine {
-        ArticleContent(
-            listOf(
-                ArticleInfo(
-                    1,
-                    "1",
-                    "1111/11/1",
-                    "xxxxxx",
-                    listOf("a", "b"),
-                    Link("https://random.52ecy.cn/randbg.php/${Random.nextInt()}?size=1").some()
-                ),
-                ArticleInfo(
-                    2,
-                    "2",
-                    "1111/11/1",
-                    "xxxxxx",
-                    listOf("a", "b"),
-                    Link("https://random.52ecy.cn/randbg.php/${Random.nextInt()}?size=1").some()
-                ),
-                ArticleInfo(
-                    3,
-                    "3",
-                    "1111/11/1",
-                    "xxxxxx",
-                    listOf("a", "b"),
-                    Link("https://random.52ecy.cn/randbg.php/${Random.nextInt()}?size=1").some()
-                )
-            )
-        )
-    }.combine(::Footer).buildPage()
+class IndexHandler : Handler<PBuilder> {
+    override suspend fun handle(): PBuilder {
+        val articles = ArticleDAO.getAll()
+        val articlePreviews = articles.map { it.preview(50) }
+
+        return CombinerBuilder().combine {
+            NavBar.Builder().setLogo(ImgRes.path("logo.png").some()).build()
+        }.combine {
+            Jumbotron.Builder().setBackground(ImgRes.path("background.jpg").some()).build()
+        }.combine(::GoTop).combine {
+            ArticleContent.Builder().setArticlePreview(articlePreviews).build()
+        }.combine(::Footer).buildPage()
+    }
 }

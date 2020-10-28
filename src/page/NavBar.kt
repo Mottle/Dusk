@@ -14,7 +14,13 @@ import moe.liar.utils.css
 import moe.liar.utils.map
 import moe.liar.utils.none
 
-class NavBar(private val logo: Option<Resources>, private val forceShow: Boolean = false) : Page {
+class NavBar private constructor(private val logo: Option<Resources>, private val forceShow: Boolean) : Page {
+    class Builder(private val logo: Option<Resources> = none(), private val forceShow: Boolean = false) {
+        fun setLogo(lg: Option<Resources>) = Builder(lg, forceShow)
+        fun setForceShown() = Builder(logo, true)
+        fun build() = NavBar(logo, forceShow)
+    }
+
     override fun head(htmlHead: HEAD) = Unit
 
     override fun body(htmlBody: BODY) {

@@ -9,14 +9,12 @@ import io.ktor.locations.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
+import kotlinx.css.article
+import moe.liar.handler.ArticleHandler
 import moe.liar.handler.IndexHandler
-import moe.liar.model.ArticleInfo
-import moe.liar.model.ImgRes
-import moe.liar.model.Link
 import moe.liar.page.*
 import moe.liar.utils.some
 import org.slf4j.event.Level
-import kotlin.random.Random
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
@@ -33,19 +31,20 @@ fun Application.module(testing: Boolean = false) {
 
     install(StatusPages) {
         status(HttpStatusCode.NotFound) {
-            call.respond(
-                TextContent(
-                    "${it.value} ${it.description}",
-                    ContentType.Text.Plain.withCharset(Charsets.UTF_8),
-                    it
-                )
-            )
+            call.respondRedirect("/static/html/404.html")
         }
     }
     val layout = MainLayout("/static".some(), listOf(), listOf("animation.css"))
     routing {
-        get<IndexHandler> {index ->
-            val page = index.handle()
+        get<IndexHandler> { handler ->
+            val page = handler.handle()
+            call.respondHtml {
+                layout.build(this, page)
+            }
+        }
+
+        get<ArticleHandler> { handler ->
+            val page = handler.handle()
             call.respondHtml {
                 layout.build(this, page)
             }

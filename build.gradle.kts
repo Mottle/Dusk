@@ -36,6 +36,10 @@ dependencies {
 
 dependencies {
     implementation("com.vladsch.flexmark:flexmark-all:0.62.2")
+    implementation("mysql:mysql-connector-java:5.1.48")
+    implementation("org.jetbrains.exposed", "exposed-core", "0.24.1")
+    implementation("org.jetbrains.exposed", "exposed-dao", "0.24.1")
+    implementation("org.jetbrains.exposed", "exposed-jdbc", "0.24.1")
 }
 
 kotlin.sourceSets["main"].kotlin.srcDirs("src")

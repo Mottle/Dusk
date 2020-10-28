@@ -1,5 +1,7 @@
 package moe.liar.model
 
+import kotlin.random.Random
+
 interface Resources {
     abstract fun uri(): String
 }
@@ -23,3 +25,7 @@ val JsRes = Static("/static/js/")
 val CssRes = Static("/static/js/")
 val IconRes = Static("/static/img/icon/")
 val IconSvgRes = Static("/static/img/icon/svg/")
+
+object RandomImgAPI {
+    fun link(size: Int = 1) =  Link("https://random.52ecy.cn/randbg.php/${Random.nextInt()}?size=1")
+}

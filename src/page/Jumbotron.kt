@@ -9,8 +9,15 @@ import moe.liar.model.Resources
 import moe.liar.utils.Option
 import moe.liar.utils.css
 import moe.liar.utils.map
+import moe.liar.utils.none
 
-class Jumbotron(private val backgroundImg: Option<Resources>, private val heightPct: Int = 100) : Page {
+class Jumbotron private constructor(private val backgroundImg: Option<Resources>, private val heightPct: Int) : Page {
+    class Builder(private val backgroundImg: Option<Resources> = none(), private val heightPct: Int = 100) {
+        fun setBackground(bg: Option<Resources>) = Builder(bg, heightPct)
+        fun setHeight(h: Int) = Builder(backgroundImg, h)
+        fun build() = Jumbotron(backgroundImg, heightPct)
+    }
+
     override fun head(htmlHead: HEAD) = Unit
 
     override fun body(htmlBody: BODY) = with(htmlBody) {

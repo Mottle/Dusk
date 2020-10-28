@@ -20,9 +20,9 @@ fun <T> Option<T>.getOrElse(e: T): T = when (this) {
     else -> e
 }
 
-fun <T> T.option(value: T): Option<T> = when (value) {
+fun <T> T.option(): Option<T> = when (this) {
     null -> None
-    else -> value.some()
+    else -> this.some()
 }
 
 fun <A> A.some(): Option<A> = Some(this)

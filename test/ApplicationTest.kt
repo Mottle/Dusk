@@ -2,6 +2,8 @@ package moe.liar
 
 import io.ktor.http.*
 import io.ktor.server.testing.*
+import kotlinx.coroutines.runBlocking
+import moe.liar.model.ArticleDAO
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
