@@ -11,11 +11,23 @@ import moe.liar.utils.css
 import moe.liar.utils.map
 import moe.liar.utils.none
 
-class Jumbotron private constructor(private val backgroundImg: Option<Resources>, private val heightPct: Int) : Page {
-    class Builder(private val backgroundImg: Option<Resources> = none(), private val heightPct: Int = 100) {
-        fun setBackground(bg: Option<Resources>) = Builder(bg, heightPct)
-        fun setHeight(h: Int) = Builder(backgroundImg, h)
-        fun build() = Jumbotron(backgroundImg, heightPct)
+class Jumbotron private constructor(
+    private val backgroundImg: Option<Resources>,
+    private val heightPct: Int,
+    private val mainTitle: String,
+    private val secondaryTitle: String,
+    private val sizeOfFont: Int
+    ) : Page {
+    data class Builder(private val backgroundImg: Option<Resources> = none(), private val heightPct: Int = 100,
+                  private val mainTitle: String = "", private val secondaryTitle: String = "",
+                       private val fontSize: Int = 6
+                  ) {
+        fun setBackground(bg: Option<Resources>) = copy(backgroundImg = bg)
+        fun setHeight(h: Int) = copy(heightPct = h)
+        fun setMainTitle(title: String) = copy(mainTitle = title)
+        fun setSecondaryTitle(title: String) = copy(secondaryTitle = title)
+        fun setFontSize(size: Int) = copy(fontSize = size)
+        fun build() = Jumbotron(backgroundImg, heightPct, mainTitle, secondaryTitle, fontSize)
     }
 
     override fun head(htmlHead: HEAD) = Unit
@@ -25,10 +37,12 @@ class Jumbotron private constructor(private val backgroundImg: Option<Resources>
             id = "jumbotron"
             div("container focus-info") {
                 h1("display-1 center-info row") {
-                    +"Hello world"
+                    id = "main-title"
+                    +mainTitle
                 }
                 p("display-4 center-info row") {
-                    +"hello world to you"
+                    id = "secondary-title"
+                    +secondaryTitle
                 }
             }
         }
@@ -54,7 +68,7 @@ class Jumbotron private constructor(private val backgroundImg: Option<Resources>
                 rule(".focus-info") {
                     position = Position.relative
                     opacity = 1
-                    top = 30.pct
+                    top = 40.pct
                     animation(
                         name = "delay-hide",
                         duration = 1.s
@@ -90,13 +104,30 @@ class Jumbotron private constructor(private val backgroundImg: Option<Resources>
                     )
                 }
 
-                rule(".focus-info .display-4") {
-                    fontSize = LinearDimension("2rem")
-                }
-
                 rule(".center-info") {
                     textAlign = TextAlign.center
                     justifyContent = JustifyContent.center
+                }
+
+//                中大型屏幕
+                media("(min-width: 768px)") {
+                    rule("#main-title") {
+                        fontSize = LinearDimension("${sizeOfFont}rem !important")
+                    }
+
+                    rule("#secondary-title") {
+                        fontSize = LinearDimension("${sizeOfFont / 2}rem !important")
+                    }
+                }
+
+                media("(max-width: 767px)") {
+                    rule("#main-title") {
+                        fontSize = LinearDimension("${sizeOfFont / 2}rem !important")
+                    }
+
+                    rule("#secondary-title") {
+                        fontSize = LinearDimension("${sizeOfFont / 4}rem !important")
+                    }
                 }
             }
         }

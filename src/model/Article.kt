@@ -1,9 +1,6 @@
 package moe.liar.model
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import moe.liar.utils.*
 import java.io.File
 import java.lang.Integer.min
@@ -19,7 +16,9 @@ data class ArticlePreview(
     val imageRes: Option<Resources> = none(),
 ) {
     val preview
-        get() = Markdown(rowPreview).toHtml()
+        get() = MarkdownFactory.get(rowPreview).toHtml()
+
+    fun formatDate() = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date)
 }
 
 data class Article(
@@ -31,7 +30,9 @@ data class Article(
     val imageRes: Option<Resources>
 ) {
     val content
-        get() = Markdown(rowContent).toHtml()
+        get() = MarkdownFactory.get(rowContent).toHtml()
+
+    fun formatDate() = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date)
 }
 
 fun Article.preview(previewSize: Int = 100): ArticlePreview {
@@ -46,12 +47,7 @@ private fun String.splitNoTitleContent(previewSize: Int) = this.substring(0, min
 
 object ArticleDAO {
     private var articles: List<Article> = listOf()
-    init {
-        GlobalScope.launch(Dispatchers.IO) {
-            refresh()
-        }
-    }
-    private suspend fun refresh() = withContext(Dispatchers.IO) {
+    suspend fun refresh() = withContext(Dispatchers.IO) {
         val dir = File("./resources/markdown/")
         val files = dir.listFiles().some()
         articles = files.getOrElse(arrayOf<File?>()).filter<File> { it.isFile }

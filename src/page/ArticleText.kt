@@ -1,8 +1,12 @@
 package moe.liar.page
 
+import kotlinx.css.Color
+import kotlinx.css.LinearDimension
 import kotlinx.css.px
 import kotlinx.html.*
 import moe.liar.model.Article
+import moe.liar.model.CssRes
+import moe.liar.model.JsRes
 import moe.liar.utils.Option
 import moe.liar.utils.css
 import moe.liar.utils.none
@@ -14,7 +18,9 @@ class ArticleText private constructor(private val article: Article): Page {
         fun build() = ArticleText(article.forceGet() as Article)
     }
 
-    override fun head(htmlHead: HEAD) = Unit
+    override fun head(htmlHead: HEAD) = with(htmlHead) {
+        styleLink(CssRes.path("prism.css").uri())
+    }
 
     override fun body(htmlBody: BODY) = with(htmlBody) {
         div("container article-container") {
@@ -36,9 +42,22 @@ class ArticleText private constructor(private val article: Article): Page {
                     paddingTop = 100.px
                     paddingBottom = 100.px
                 }
+
+                rule("blockquote") {
+                    margin = "1.6em 0"
+                    padding = "0 0.8em"
+                    borderLeft = "4px solid #ddd;"
+                    color = Color("#777")
+                }
+
+                rule("body") {
+                    fontSize = LinearDimension("1rem")
+                }
             }
         }
     }
 
-    override fun script(htmlBody: BODY) = Unit
+    override fun script(htmlBody: BODY) = with(htmlBody) {
+        script(src = JsRes.path("prism.js").uri()) {}
+    }
 }

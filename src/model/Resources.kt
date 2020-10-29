@@ -22,7 +22,7 @@ class Static(rootPath: String) {
 
 val ImgRes = Static("/static/img/")
 val JsRes = Static("/static/js/")
-val CssRes = Static("/static/js/")
+val CssRes = Static("/static/css/")
 val IconRes = Static("/static/img/icon/")
 val IconSvgRes = Static("/static/img/icon/svg/")
 

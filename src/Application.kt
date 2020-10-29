@@ -9,9 +9,12 @@ import io.ktor.locations.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
-import kotlinx.css.article
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import moe.liar.handler.ArticleHandler
 import moe.liar.handler.IndexHandler
+import moe.liar.handler.StatusPageHandler
+import moe.liar.model.ArticleDAO
 import moe.liar.page.*
 import moe.liar.utils.some
 import org.slf4j.event.Level
@@ -30,10 +33,13 @@ fun Application.module(testing: Boolean = false) {
     }
 
     install(StatusPages) {
-        status(HttpStatusCode.NotFound) {
-            call.respondRedirect("/static/html/404.html")
+        HttpStatusCode.allStatusCodes.filter { it.value - 400 >= 0 }.forEach { code ->
+            status(code) {
+                call.respondRedirect("/status/${code.value}")
+            }
         }
     }
+    GlobalScope.launch { ArticleDAO.refresh() }
     val layout = MainLayout("/static".some(), listOf(), listOf("animation.css"))
     routing {
         get<IndexHandler> { handler ->
@@ -44,6 +50,13 @@ fun Application.module(testing: Boolean = false) {
         }
 
         get<ArticleHandler> { handler ->
+            val page = handler.handle()
+            call.respondHtml {
+                layout.build(this, page)
+            }
+        }
+
+        get<StatusPageHandler> { handler ->
             val page = handler.handle()
             call.respondHtml {
                 layout.build(this, page)

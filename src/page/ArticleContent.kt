@@ -103,7 +103,7 @@ private fun HtmlBlockTag.articleCard(articlePreview: ArticlePreview) =
                     div("card-body card-arrangement") {
                         attributes["style"] = "height: 300px"
                         h5("card-title") { +articlePreview.title }
-                        p("card-text") { small("text-muted") { +SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(articlePreview.date)  } }
+                        p("card-text") { small("text-muted") { +articlePreview.formatDate()  } }
                         p("card-text") {
                             articlePreview.tags.forEach {
                                 span("badge badge-light") { +it }
