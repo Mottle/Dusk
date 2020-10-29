@@ -5,6 +5,7 @@ import io.ktor.locations.*
 import moe.liar.model.Article
 import moe.liar.model.ArticleDAO
 import moe.liar.model.ImgRes
+import moe.liar.model.RandomBackground
 import moe.liar.page.*
 import moe.liar.utils.getOrElse
 import moe.liar.utils.map
@@ -19,7 +20,7 @@ data class ArticleHandler(private val id: Int) : Handler<PBuilder> {
         return CombinerBuilder().combine {
             NavBar.Builder().setLogo(ImgRes.path("logo.png").some()).setForceShown().build()
         }.combine {
-            Jumbotron.Builder().setBackground(ImgRes.path("background.jpg").some())
+            Jumbotron.Builder().setBackground(RandomBackground.getRandom())
                 .setMainTitle(art.map { it.title }.getOrElse(""))
                 .setSecondaryTitle(art.map { it.formatDate() }.getOrElse(""))
                 .setFontSize(4)

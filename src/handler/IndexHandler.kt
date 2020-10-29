@@ -17,7 +17,7 @@ class IndexHandler : Handler<PBuilder> {
         return CombinerBuilder().combine {
             NavBar.Builder().setLogo(ImgRes.path("logo.png").some()).build()
         }.combine {
-            Jumbotron.Builder().setBackground(ImgRes.path("background.jpg").some())
+            Jumbotron.Builder().setBackground(RandomBackground.getRandom())
                 .setMainTitle("Hello world").setSecondaryTitle("welcome to DUSK").build()
         }.combine(::GoTop).combine {
             ArticleContent.Builder().setArticlePreview(articlePreviews).build()

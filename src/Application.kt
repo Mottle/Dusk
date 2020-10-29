@@ -15,6 +15,7 @@ import moe.liar.handler.ArticleHandler
 import moe.liar.handler.IndexHandler
 import moe.liar.handler.StatusPageHandler
 import moe.liar.model.ArticleDAO
+import moe.liar.model.RandomBackground
 import moe.liar.page.*
 import moe.liar.utils.some
 import org.slf4j.event.Level
@@ -39,7 +40,10 @@ fun Application.module(testing: Boolean = false) {
             }
         }
     }
-    GlobalScope.launch { ArticleDAO.refresh() }
+    GlobalScope.launch {
+        ArticleDAO.refresh()
+        RandomBackground.precache()
+    }
     val layout = MainLayout("/static".some(), listOf(), listOf("animation.css"))
     routing {
         get<IndexHandler> { handler ->

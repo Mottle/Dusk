@@ -18,7 +18,7 @@ data class ArticlePreview(
     val preview
         get() = MarkdownFactory.get(rowPreview).toHtml()
 
-    fun formatDate() = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date)
+    fun formatDate(): String = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date)
 }
 
 data class Article(
@@ -32,7 +32,7 @@ data class Article(
     val content
         get() = MarkdownFactory.get(rowContent).toHtml()
 
-    fun formatDate() = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date)
+    fun formatDate(): String = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date)
 }
 
 fun Article.preview(previewSize: Int = 100): ArticlePreview {
