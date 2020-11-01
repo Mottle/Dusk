@@ -4,7 +4,6 @@ import io.ktor.locations.*
 import moe.liar.model.*
 import moe.liar.page.*
 import moe.liar.utils.some
-import kotlin.random.Random
 
 
 @KtorExperimentalLocationsAPI

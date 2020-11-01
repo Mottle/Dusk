@@ -55,7 +55,9 @@ object ArticleDAO {
             .map { it.forceGet()!! }.sortByDate().reversed()
     }
 
-    suspend fun get(id: Int): Option<Article> = articles.find { it.articleId == id }.option() as Option<Article>
+    fun get(id: Int): Option<Article> = articles.find { it.articleId == id }.let {
+        it ?. some() ?: none()
+    }
 
     suspend fun getAll(): List<Article> {
         refresh()

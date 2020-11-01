@@ -10,7 +10,7 @@ import java.io.File
 import kotlin.random.Random
 
 interface Resources {
-    abstract fun uri(): String
+    fun uri(): String
 }
 
 class Link (private val link: String): Resources {
@@ -44,10 +44,10 @@ object RandomBackground {
     suspend fun precache() = withContext(Dispatchers.IO) {
         val dir = File(backgroundDir)
         val files = dir.listFiles().some()
-        cache = files.getOrElse(arrayOf()).filter { it.isFile }.map { BackgroundRes.path(it.name) }.toList()
+        cache = files.getOrElse(arrayOf()).filter { it.isFile }.filter { isImg(it.name) }.map { BackgroundRes.path(it.name) }.toList()
     }
     fun get(index: Int): Option<Resources> = try {
-        cache.get(index).some()
+        cache[index].some()
     } catch (e: Exception) {
         none()
     }
@@ -57,3 +57,5 @@ object RandomBackground {
         return get(Random.nextInt(0, maxIndex))
     }
 }
+
+private fun isImg(name: String) = name.endsWith("png") || name.endsWith("jpg") || name.endsWith("jpeg")
