@@ -5,9 +5,7 @@ import kotlinx.css.px
 import kotlinx.html.*
 import moe.liar.model.IconSvgRes
 import moe.liar.model.JsRes
-import moe.liar.utils.Option
 import moe.liar.utils.css
-import moe.liar.utils.map
 
 class GoTop : Page {
     override fun head(htmlHead: HEAD) = Unit

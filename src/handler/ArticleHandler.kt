@@ -16,7 +16,7 @@ import moe.liar.utils.some
 data class ArticleHandler(private val id: Int) : Handler<PBuilder> {
     override suspend fun handle(): PBuilder {
         val art = ArticleDAO.get(id)
-        if(art.isNone()) throw NotFoundException()
+        if (art.isNone()) throw NotFoundException()
         return CombinerBuilder().combine {
             NavBar.Builder().setLogo(ImgRes.path("logo.png").some()).setForceShown().build()
         }.combine {

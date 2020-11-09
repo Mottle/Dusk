@@ -17,11 +17,12 @@ class Jumbotron private constructor(
     private val mainTitle: String,
     private val secondaryTitle: String,
     private val sizeOfFont: Int
-    ) : Page {
-    data class Builder(private val backgroundImg: Option<Resources> = none(), private val heightPct: Int = 100,
-                  private val mainTitle: String = "", private val secondaryTitle: String = "",
-                       private val fontSize: Int = 6
-                  ) {
+) : Page {
+    data class Builder(
+        private val backgroundImg: Option<Resources> = none(), private val heightPct: Int = 100,
+        private val mainTitle: String = "", private val secondaryTitle: String = "",
+        private val fontSize: Int = 6
+    ) {
         fun setBackground(bg: Option<Resources>) = copy(backgroundImg = bg)
         fun setHeight(h: Int) = copy(heightPct = h)
         fun setMainTitle(title: String) = copy(mainTitle = title)

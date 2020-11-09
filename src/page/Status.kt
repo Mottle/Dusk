@@ -15,7 +15,7 @@ import moe.liar.utils.none
 
 class Status private constructor(private val status: String, private val backgroundImg: Option<Resources>) : Page {
     data class Builder(private val status: String = "", private val background: Option<Resources> = none()) {
-        fun  setStatus(s: String) = copy(status = s)
+        fun setStatus(s: String) = copy(status = s)
         fun setBackGround(bg: Option<Resources>) = copy(background = bg)
         fun build() = Status(status, background)
     }
@@ -45,7 +45,8 @@ class Status private constructor(private val status: String, private val backgro
                     }
                     textAlign = TextAlign.center
                     fontSize = LinearDimension("3rem")
-                    fontFamily = "\"Source Sans Pro\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\";"
+                    fontFamily =
+                        "\"Source Sans Pro\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\";"
 
                 }
             }

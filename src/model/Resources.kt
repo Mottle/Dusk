@@ -13,12 +13,12 @@ interface Resources {
     fun uri(): String
 }
 
-class Link (private val link: String): Resources {
+class Link(private val link: String) : Resources {
     override fun uri(): String = link
 }
 
 class Static(rootPath: String) {
-    private val root: String = if(rootPath.last() == '/') rootPath else "$rootPath/"
+    private val root: String = if (rootPath.last() == '/') rootPath else "$rootPath/"
 
     fun path(name: String) = StaticPath(root, name)
 
@@ -35,7 +35,7 @@ val IconSvgRes = Static("/static/img/icon/svg/")
 val BackgroundRes = Static("/static/img/background/")
 
 object RandomImgAPI {
-    fun link(size: Int = 1) =  Link("https://random.52ecy.cn/randbg.php/${Random.nextInt()}?size=$size")
+    fun link(size: Int = 1) = Link("https://random.52ecy.cn/randbg.php/${Random.nextInt()}?size=$size")
 }
 
 object RandomBackground {
@@ -44,8 +44,10 @@ object RandomBackground {
     suspend fun precache() = withContext(Dispatchers.IO) {
         val dir = File(backgroundDir)
         val files = dir.listFiles().some()
-        cache = files.getOrElse(arrayOf()).filter { it.isFile }.filter { isImg(it.name) }.map { BackgroundRes.path(it.name) }.toList()
+        cache = files.getOrElse(arrayOf()).filter { it.isFile }.filter { isImg(it.name) }
+            .map { BackgroundRes.path(it.name) }.toList()
     }
+
     fun get(index: Int): Option<Resources> = try {
         cache[index].some()
     } catch (e: Exception) {

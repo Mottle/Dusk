@@ -16,7 +16,8 @@ import moe.liar.handler.IndexHandler
 import moe.liar.handler.StatusPageHandler
 import moe.liar.model.ArticleDAO
 import moe.liar.model.RandomBackground
-import moe.liar.page.*
+import moe.liar.page.MainLayout
+import moe.liar.page.build
 import moe.liar.utils.some
 import org.slf4j.event.Level
 

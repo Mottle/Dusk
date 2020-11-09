@@ -2,7 +2,6 @@ package moe.liar.page
 
 import kotlinx.html.BODY
 import kotlinx.html.HEAD
-import moe.liar.utils.Option
 
 interface Page {
     fun head(htmlHead: HEAD)

@@ -1,6 +1,7 @@
 package moe.liar.model
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import moe.liar.utils.*
 import java.io.File
 import java.lang.Integer.min
@@ -56,7 +57,7 @@ object ArticleDAO {
     }
 
     fun get(id: Int): Option<Article> = articles.find { it.articleId == id }.let {
-        it ?. some() ?: none()
+        it?.some() ?: none()
     }
 
     suspend fun getAll(): List<Article> {
@@ -68,7 +69,7 @@ object ArticleDAO {
 private fun List<Article>.sortByDate() = this.sortedBy { it.date }
 
 private fun markdownToArticle(markdown: File, id: Int): Option<Article> {
-    val lines = markdown.readLines()//.map { it.trim() }
+    val lines = markdown.readLines()
     val splits = lines.splitToMetaAndContentLine()
     val metaLines = splits.first
     val meta = metaLines.parseMeta()
@@ -112,7 +113,7 @@ private fun List<String>.parseMeta(): Option<Triple<String, List<String>, Date>>
 }
 
 private fun List<String>.findPrefix(prefix: String): Option<String> =
-    this.find { it.startsWith(prefix) }?.removePrefix(prefix)?.trim().option() as Option<String>
+    this.find { it.startsWith(prefix) }?.removePrefix(prefix)?.trim()?.option() ?: None
 
 
 private fun String.isMetaFlag() = this == "---"

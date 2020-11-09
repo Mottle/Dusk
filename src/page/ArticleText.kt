@@ -12,7 +12,7 @@ import moe.liar.utils.css
 import moe.liar.utils.none
 import moe.liar.utils.some
 
-class ArticleText private constructor(private val article: Article): Page {
+class ArticleText private constructor(private val article: Article) : Page {
     class Builder(private val article: Option<Article> = none()) {
         fun setArticle(art: Article) = Builder(art.some())
         fun build() = ArticleText(article.forceGet() as Article)

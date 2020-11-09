@@ -2,7 +2,6 @@ package moe.liar.page
 
 import kotlinx.html.BODY
 import kotlinx.html.HEAD
-import moe.liar.utils.Option
 
 class Combiner(private val pageBuilders: List<PBuilder> = listOf()) : Page {
     private val pages = pageBuilders.map { it() }

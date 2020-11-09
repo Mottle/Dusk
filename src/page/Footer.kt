@@ -1,6 +1,9 @@
 package moe.liar.page
 
-import kotlinx.css.*
+import kotlinx.css.Color
+import kotlinx.css.Position
+import kotlinx.css.pct
+import kotlinx.css.px
 import kotlinx.html.*
 import moe.liar.utils.css
 

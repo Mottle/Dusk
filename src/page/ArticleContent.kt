@@ -1,11 +1,17 @@
 package moe.liar.page
 
-import kotlinx.css.*
-import kotlinx.css.properties.*
+import kotlinx.css.LinearDimension
+import kotlinx.css.TextAlign
+import kotlinx.css.properties.s
+import kotlinx.css.properties.scale
+import kotlinx.css.properties.transform
+import kotlinx.css.properties.transition
+import kotlinx.css.px
 import kotlinx.html.*
 import moe.liar.model.ArticlePreview
-import moe.liar.utils.*
-import java.text.SimpleDateFormat
+import moe.liar.utils.css
+import moe.liar.utils.getOrElse
+import moe.liar.utils.map
 
 class ArticleContent private constructor(private val data: List<ArticlePreview>) : Page {
     class Builder(private val data: List<ArticlePreview> = listOf()) {
@@ -93,7 +99,10 @@ private fun HtmlBlockTag.articleCard(articlePreview: ArticlePreview) =
             div("row no-gutters") {
                 div("col-md-7 card-thumb") {
                     a(href = link) {
-                        img(classes = "card-img img-limit", src = articlePreview.imageRes.map { it.uri() }.getOrElse("")) {
+                        img(
+                            classes = "card-img img-limit",
+                            src = articlePreview.imageRes.map { it.uri() }.getOrElse("")
+                        ) {
                             attributes["loading"] = "lazy"
                             attributes["style"] = "object-fit: cover"
                         }
@@ -103,7 +112,7 @@ private fun HtmlBlockTag.articleCard(articlePreview: ArticlePreview) =
                     div("card-body card-arrangement") {
                         attributes["style"] = "height: 300px"
                         h5("card-title") { +articlePreview.title }
-                        p("card-text") { small("text-muted") { +articlePreview.formatDate()  } }
+                        p("card-text") { small("text-muted") { +articlePreview.formatDate() } }
                         p("card-text") {
                             articlePreview.tags.forEach {
                                 span("badge badge-light") { +it }

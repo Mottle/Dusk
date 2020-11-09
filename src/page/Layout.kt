@@ -1,9 +1,7 @@
 package moe.liar.page
 
-import kotlinx.css.LinearDimension
 import kotlinx.html.*
 import moe.liar.utils.Option
-import moe.liar.utils.css
 import moe.liar.utils.map
 
 interface Layout : (HTML, Page) -> Unit
