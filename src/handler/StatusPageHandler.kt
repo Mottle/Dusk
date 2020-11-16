@@ -2,7 +2,7 @@ package moe.liar.handler
 
 import io.ktor.http.*
 import io.ktor.locations.*
-import moe.liar.model.RandomImgAPI
+import moe.liar.model.InternetRandomImgAPI
 import moe.liar.page.PBuilder
 import moe.liar.page.Status
 import moe.liar.utils.Option
@@ -18,7 +18,7 @@ class StatusPageHandler(private val code: Int) : Handler<PBuilder> {
         return {
             Status.Builder()
                 .setStatus("${message.getOrElse("$code Unknown Error")}")
-                .setBackGround(RandomImgAPI.link(0).some())
+                .setBackGround(InternetRandomImgAPI.link(0))
                 .build()
         }
     }

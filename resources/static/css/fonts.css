@@ -1,0 +1,8 @@
+@font-face {
+    font-family: "Sarasa";
+    src: url("/static/fonts/sarasa-mono-sc-regular.ttf") format("ttf")
+}
+
+html body {
+    font-family: "Sarasa";
+}

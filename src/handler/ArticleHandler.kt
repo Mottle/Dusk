@@ -5,7 +5,7 @@ import io.ktor.locations.*
 import moe.liar.model.Article
 import moe.liar.model.ArticleDAO
 import moe.liar.model.ImgRes
-import moe.liar.model.RandomBackground
+import moe.liar.model.LocalRandomBackground
 import moe.liar.page.*
 import moe.liar.utils.getOrElse
 import moe.liar.utils.map
@@ -18,9 +18,9 @@ data class ArticleHandler(private val id: Int) : Handler<PBuilder> {
         val art = ArticleDAO.get(id)
         if (art.isNone()) throw NotFoundException()
         return CombinerBuilder().combine {
-            NavBar.Builder().setLogo(ImgRes.path("logo.png").some()).setForceShown().build()
+            NavBar.Builder().setLogo(ImgRes.path("logo.png")).setForceShown().build()
         }.combine {
-            Jumbotron.Builder().setBackground(RandomBackground.getRandom())
+            Jumbotron.Builder().setBackground(LocalRandomBackground.getRandom())
                 .setMainTitle(art.map { it.title }.getOrElse(""))
                 .setSecondaryTitle(art.map { it.formatDate() }.getOrElse(""))
                 .setFontSize(4)

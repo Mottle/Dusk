@@ -11,11 +11,12 @@ import io.ktor.response.*
 import io.ktor.routing.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import moe.liar.handler.AboutMeHandler
 import moe.liar.handler.ArticleHandler
 import moe.liar.handler.IndexHandler
 import moe.liar.handler.StatusPageHandler
 import moe.liar.model.ArticleDAO
-import moe.liar.model.RandomBackground
+import moe.liar.model.LocalRandomBackground
 import moe.liar.page.MainLayout
 import moe.liar.page.build
 import moe.liar.utils.some
@@ -43,7 +44,7 @@ fun Application.module(testing: Boolean = false) {
     }
     GlobalScope.launch {
         ArticleDAO.refresh()
-        RandomBackground.precache()
+        LocalRandomBackground.precache()
     }
     val layout = MainLayout("/static".some(), listOf(), listOf("animation.css"))
     routing {
@@ -62,6 +63,13 @@ fun Application.module(testing: Boolean = false) {
         }
 
         get<StatusPageHandler> { handler ->
+            val page = handler.handle()
+            call.respondHtml {
+                layout.build(this, page)
+            }
+        }
+
+        get<AboutMeHandler> { handler ->
             val page = handler.handle()
             call.respondHtml {
                 layout.build(this, page)

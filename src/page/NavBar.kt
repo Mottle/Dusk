@@ -9,15 +9,12 @@ import kotlinx.css.px
 import kotlinx.html.*
 import moe.liar.model.JsRes
 import moe.liar.model.Resources
-import moe.liar.utils.Option
-import moe.liar.utils.css
-import moe.liar.utils.map
-import moe.liar.utils.none
+import moe.liar.utils.*
 
 class NavBar private constructor(private val logo: Option<Resources>, private val forceShow: Boolean) : Page {
-    class Builder(private val logo: Option<Resources> = none(), private val forceShow: Boolean = false) {
-        fun setLogo(lg: Option<Resources>) = Builder(lg, forceShow)
-        fun setForceShown() = Builder(logo, true)
+    data class Builder(private val logo: Option<Resources> = none(), private val forceShow: Boolean = false) {
+        fun setLogo(lg: Resources) = copy(logo = lg.some())
+        fun setForceShown() = copy(forceShow = true)
         fun build() = NavBar(logo, forceShow)
     }
 

@@ -82,7 +82,7 @@ private fun markdownToArticle(markdown: File, id: Int): Option<Article> {
                 date = info.third,
                 rowContent = it,
                 tags = info.second,
-                imageRes = RandomImgAPI.link().some()
+                imageRes = InternetRandomImgAPI.link(2).some()
             ).some()
         }
     }

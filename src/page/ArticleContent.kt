@@ -103,7 +103,7 @@ private fun HtmlBlockTag.articleCard(articlePreview: ArticlePreview) =
                             classes = "card-img img-limit",
                             src = articlePreview.imageRes.map { it.uri() }.getOrElse("")
                         ) {
-                            attributes["loading"] = "lazy"
+//                            attributes["loading"] = "lazy"
                             attributes["style"] = "object-fit: cover"
                         }
                     }

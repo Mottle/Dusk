@@ -33,7 +33,6 @@ class Footer : Page {
             css {
                 rule(".site-footer") {
                     width = 100.pct
-//                    height = 400.px
                     backgroundColor = Color("#323437")
                     color = Color.white
                 }

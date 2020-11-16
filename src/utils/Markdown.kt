@@ -27,8 +27,8 @@ object MarkdownFactory {
 private fun RowMarkdown.encodeMarkdownLatexBraces() = this.encodeLeftBraces().encodeRightBraces()
 private fun RowMarkdown.encodeLeftBraces() = this.replace("\\{", LeftBracesFlag)
 private fun RowMarkdown.encodeRightBraces() = this.replace("\\}", RightBracesFlag)
-private const val LeftBracesFlag = "#-*-#LefT#-*-#"
-private const val RightBracesFlag = "#-*-#RiGhT#-*-#"
+private const val LeftBracesFlag = "#LefT#"
+private const val RightBracesFlag = "#RiGhT#"
 
 private fun RowMarkdown.decodeMarkdownLatexBraces() = this.decodeLeftBraces().decodeRightBraces()
 private fun RowMarkdown.decodeLeftBraces() = this.replace(LeftBracesFlag, "\\{")
