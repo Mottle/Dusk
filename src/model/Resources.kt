@@ -37,7 +37,8 @@ val IconSvgRes = Static("/static/img/icon/svg/")
 val BackgroundRes = Static("/static/img/background/")
 
 object InternetRandomImgAPI {
-    fun link(size: Int = 1) = Link("https://random.52ecy.cn/randbg.php/${Random.nextInt()}?size=$size")
+//    fun link(size: Int = 1) = Link("https://random.52ecy.cn/randbg.php/${Random.nextInt()}?size=$size")
+    fun link(size: Int = 2) = Link("https://random.52ecy.cn/randbg.php/${Random.nextInt()}?type=302&size=$size")
 }
 
 object LocalRandomBackground {

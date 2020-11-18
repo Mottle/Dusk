@@ -70,6 +70,10 @@ class ArticleContent private constructor(private val data: List<ArticlePreview>)
                     rule(".card-arrangement") {
                         textAlign = TextAlign.right
                     }
+
+                    unsafe {
+                        +".card:hover { box-shadow: 0 5px 10px 5px rgba(110,110,110,.4) !important; }"
+                    }
                 }
 
                 media("(max-width: 767px)") {
@@ -77,9 +81,6 @@ class ArticleContent private constructor(private val data: List<ArticlePreview>)
                         borderRadius = LinearDimension("10px 10px 0 0")
                     }
                 }
-            }
-            unsafe {
-                +".card:hover { box-shadow: 0 5px 10px 5px rgba(110,110,110,.4) !important; }"
             }
         }
 

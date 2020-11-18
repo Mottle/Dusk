@@ -38,7 +38,7 @@ class AboutMe private constructor(private val avatar: Option<Resources>, private
                 }
 
                 div("info-center") {
-                    +"Acm最菜银牌选手"
+                    +"最菜Acmer"
                     br
                     +"擅长摸鱼"
                     br

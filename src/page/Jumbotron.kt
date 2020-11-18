@@ -5,6 +5,7 @@ import kotlinx.css.properties.Timing
 import kotlinx.css.properties.animation
 import kotlinx.css.properties.s
 import kotlinx.html.*
+import moe.liar.model.JsRes
 import moe.liar.model.Resources
 import moe.liar.utils.Option
 import moe.liar.utils.css
@@ -82,7 +83,7 @@ class Jumbotron private constructor(
                     )
                 }
 
-                rule(".focus-info .display-1") {
+                rule(".jmp1") {
                     animation(
                         name = "jumbotron-jump",
                         duration = 1.s,
@@ -91,7 +92,7 @@ class Jumbotron private constructor(
                     )
                 }
 
-                rule(".focus-info .display-4") {
+                rule(".jmp2") {
                     animation(
                         name = "delay-hide",
                         duration = 1.s,
@@ -134,5 +135,7 @@ class Jumbotron private constructor(
         }
     }
 
-    override fun script(htmlBody: BODY) = Unit
+    override fun script(htmlBody: BODY) = with(htmlBody) {
+        script(src = JsRes.path("jumbotron.js").uri()) {}
+    }
 }
