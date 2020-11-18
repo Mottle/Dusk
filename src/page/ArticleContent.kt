@@ -2,10 +2,7 @@ package moe.liar.page
 
 import kotlinx.css.LinearDimension
 import kotlinx.css.TextAlign
-import kotlinx.css.properties.s
-import kotlinx.css.properties.scale
-import kotlinx.css.properties.transform
-import kotlinx.css.properties.transition
+import kotlinx.css.properties.*
 import kotlinx.css.px
 import kotlinx.html.*
 import moe.liar.model.ArticlePreview
@@ -47,12 +44,6 @@ class ArticleContent private constructor(private val data: List<ArticlePreview>)
                     transition(property = "all", duration = .6.s)
                 }
 
-                rule(".card:hover") {
-                    transform {
-                        scale(1.1, 1.1)
-                    }
-                }
-
                 rule(".img-limit") {
                     height = 300.px
                 }
@@ -70,10 +61,6 @@ class ArticleContent private constructor(private val data: List<ArticlePreview>)
                     rule(".card-arrangement") {
                         textAlign = TextAlign.right
                     }
-
-                    unsafe {
-                        +".card:hover { box-shadow: 0 5px 10px 5px rgba(110,110,110,.4) !important; }"
-                    }
                 }
 
                 media("(max-width: 767px)") {
@@ -81,6 +68,19 @@ class ArticleContent private constructor(private val data: List<ArticlePreview>)
                         borderRadius = LinearDimension("10px 10px 0 0")
                     }
                 }
+
+                media("(min-width: 1080px)") {
+                    rule(".card:hover") {
+                        transform {
+                            scale(1.1, 1.1)
+                        }
+                    }
+                }
+            }
+            unsafe {
+                +"""@media screen and (min-width: 1080px) {
+                    |   .card:hover { box-shadow: 0 5px 10px 5px rgba(110,110,110,.4) !important; }
+                    |}""".trimMargin()
             }
         }
 

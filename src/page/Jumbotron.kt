@@ -35,14 +35,14 @@ class Jumbotron private constructor(
     override fun head(htmlHead: HEAD) = Unit
 
     override fun body(htmlBody: BODY) = with(htmlBody) {
-        div("jumbotron jumbotron-fluid") {
+        div("jumbotron jumbotron-fluid jumbotron-hide") {
             id = "jumbotron"
             div("container focus-info") {
-                h1("display-1 center-info row") {
+                h1("display-1 center-info jumbotron-hide row") {
                     id = "main-title"
                     +mainTitle
                 }
-                p("display-4 center-info row") {
+                p("display-4 center-info jumbotron-hide row") {
                     id = "secondary-title"
                     +secondaryTitle
                 }
@@ -52,10 +52,6 @@ class Jumbotron private constructor(
             css {
                 rule("#jumbotron") {
                     height = heightPct.vh
-                    animation(
-                        name = "jumbotron-jump",
-                        duration = 1.s,
-                    )
                     border = "0"
                     marginBottom = 0.px
                     color = Color.white
@@ -69,8 +65,21 @@ class Jumbotron private constructor(
 
                 rule(".focus-info") {
                     position = Position.relative
-                    opacity = 1
                     top = 40.pct
+                }
+
+                rule(".jumbotron-hide") { opacity = 0 }
+                rule(".jumbotron-show") { opacity = 1 }
+
+                rule(".jmp") {
+                    animation(
+                        name = "jumbotron-jump",
+                        duration = 1.s,
+                        timing = Timing.easeInOut
+                    )
+                }
+
+                rule(".jmp1") {
                     animation(
                         name = "delay-hide",
                         duration = 1.s
@@ -83,20 +92,11 @@ class Jumbotron private constructor(
                     )
                 }
 
-                rule(".jmp1") {
-                    animation(
-                        name = "jumbotron-jump",
-                        duration = 1.s,
-                        delay = 1.s,
-                        timing = Timing.easeInOut
-                    )
-                }
-
                 rule(".jmp2") {
+//                    opacity = 1
                     animation(
                         name = "delay-hide",
-                        duration = 1.s,
-                        delay = 1.s
+                        duration = 2.s,
                     )
                     animation(
                         name = "jumbotron-jump",
