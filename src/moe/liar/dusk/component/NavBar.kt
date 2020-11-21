@@ -1,4 +1,4 @@
-package moe.liar.page
+package moe.liar.dusk.component
 
 import io.ktor.http.*
 import kotlinx.css.LinearDimension
@@ -7,11 +7,12 @@ import kotlinx.css.properties.s
 import kotlinx.css.properties.transition
 import kotlinx.css.px
 import kotlinx.html.*
-import moe.liar.model.JsRes
-import moe.liar.model.Resources
+import moe.liar.dusk.model.JsRes
+import moe.liar.dusk.model.Resources
+import moe.liar.dusk.utils.*
 import moe.liar.utils.*
 
-class NavBar private constructor(private val logo: Option<Resources>, private val forceShow: Boolean) : Page {
+class NavBar private constructor(private val logo: Option<Resources>, private val forceShow: Boolean) : Component {
     data class Builder(private val logo: Option<Resources> = none(), private val forceShow: Boolean = false) {
         fun setLogo(lg: Resources) = copy(logo = lg.some())
         fun setForceShown() = copy(forceShow = true)

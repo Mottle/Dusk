@@ -1,16 +1,16 @@
-package moe.liar.page
+package moe.liar.dusk.component
 
 import kotlinx.css.*
 import kotlinx.css.properties.Timing
 import kotlinx.css.properties.animation
 import kotlinx.css.properties.s
 import kotlinx.html.*
-import moe.liar.model.JsRes
-import moe.liar.model.Resources
-import moe.liar.utils.Option
-import moe.liar.utils.css
-import moe.liar.utils.map
-import moe.liar.utils.none
+import moe.liar.dusk.model.JsRes
+import moe.liar.dusk.model.Resources
+import moe.liar.dusk.utils.Option
+import moe.liar.dusk.utils.css
+import moe.liar.dusk.utils.map
+import moe.liar.dusk.utils.none
 
 class Jumbotron private constructor(
     private val backgroundImg: Option<Resources>,
@@ -18,7 +18,7 @@ class Jumbotron private constructor(
     private val mainTitle: String,
     private val secondaryTitle: String,
     private val sizeOfFont: Int
-) : Page {
+) : Component {
     data class Builder(
         private val backgroundImg: Option<Resources> = none(), private val heightPct: Int = 100,
         private val mainTitle: String = "", private val secondaryTitle: String = "",

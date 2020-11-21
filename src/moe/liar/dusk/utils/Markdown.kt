@@ -1,4 +1,4 @@
-package moe.liar.utils
+package moe.liar.dusk.utils
 
 import com.vladsch.flexmark.ext.gfm.strikethrough.StrikethroughSubscriptExtension
 import com.vladsch.flexmark.html.HtmlRenderer

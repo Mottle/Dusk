@@ -1,16 +1,16 @@
-package moe.liar.page
+package moe.liar.dusk.component
 
 import kotlinx.css.LinearDimension
 import kotlinx.css.TextAlign
 import kotlinx.css.properties.*
 import kotlinx.css.px
 import kotlinx.html.*
-import moe.liar.model.ArticlePreview
-import moe.liar.utils.css
-import moe.liar.utils.getOrElse
-import moe.liar.utils.map
+import moe.liar.dusk.model.ArticlePreview
+import moe.liar.dusk.utils.css
+import moe.liar.dusk.utils.getOrElse
+import moe.liar.dusk.utils.map
 
-class ArticleContent private constructor(private val data: List<ArticlePreview>) : Page {
+class ArticleContent private constructor(private val data: List<ArticlePreview>) : Component {
     class Builder(private val data: List<ArticlePreview> = listOf()) {
 
         fun setArticlePreview(data: List<ArticlePreview>) = Builder(data)

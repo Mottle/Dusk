@@ -1,4 +1,4 @@
-package moe.liar.utils
+package moe.liar.dusk.utils
 
 interface HList<out T> {
     val length: Int

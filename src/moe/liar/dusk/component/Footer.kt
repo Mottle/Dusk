@@ -1,13 +1,13 @@
-package moe.liar.page
+package moe.liar.dusk.component
 
 import kotlinx.css.Color
 import kotlinx.css.Position
 import kotlinx.css.pct
 import kotlinx.css.px
 import kotlinx.html.*
-import moe.liar.utils.css
+import moe.liar.dusk.utils.css
 
-class Footer : Page {
+class Footer : Component {
     override fun head(htmlHead: HEAD) = Unit
 
     override fun body(htmlBody: BODY) = with(htmlBody) {

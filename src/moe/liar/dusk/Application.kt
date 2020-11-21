@@ -1,4 +1,4 @@
-package moe.liar
+package moe.liar.dusk
 
 import io.ktor.application.*
 import io.ktor.features.*
@@ -11,15 +11,14 @@ import io.ktor.response.*
 import io.ktor.routing.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import moe.liar.handler.AboutMeHandler
-import moe.liar.handler.ArticleHandler
-import moe.liar.handler.IndexHandler
-import moe.liar.handler.StatusPageHandler
-import moe.liar.model.ArticleDAO
-import moe.liar.model.LocalRandomBackground
-import moe.liar.page.MainLayout
-import moe.liar.page.build
-import moe.liar.utils.some
+import moe.liar.dusk.handler.AboutMeHandler
+import moe.liar.dusk.handler.ArticleHandler
+import moe.liar.dusk.handler.IndexHandler
+import moe.liar.dusk.handler.StatusPageHandler
+import moe.liar.dusk.model.ArticleDAO
+import moe.liar.dusk.model.LocalRandomBackground
+import moe.liar.dusk.component.MainLayout
+import moe.liar.dusk.utils.some
 import org.slf4j.event.Level
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
@@ -43,36 +42,36 @@ fun Application.module(testing: Boolean = false) {
         }
     }
     GlobalScope.launch {
-        ArticleDAO.refresh()
-        LocalRandomBackground.precache()
+        ArticleDAO.refreshAsync().await()
+        LocalRandomBackground.precacheAsync().await()
     }
     val layout = MainLayout("/static".some(), listOf(), listOf("animation.css"))
     routing {
         get<IndexHandler> { handler ->
             val page = handler.handle()
             call.respondHtml {
-                layout.build(this, page)
+                layout(this, page)
             }
         }
 
         get<ArticleHandler> { handler ->
             val page = handler.handle()
             call.respondHtml {
-                layout.build(this, page)
+                layout(this, page)
             }
         }
 
         get<StatusPageHandler> { handler ->
             val page = handler.handle()
             call.respondHtml {
-                layout.build(this, page)
+                layout(this, page)
             }
         }
 
         get<AboutMeHandler> { handler ->
             val page = handler.handle()
             call.respondHtml {
-                layout.build(this, page)
+                layout(this, page)
             }
         }
 

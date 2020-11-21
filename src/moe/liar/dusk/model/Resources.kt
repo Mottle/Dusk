@@ -1,13 +1,13 @@
-package moe.liar.model
+package moe.liar.dusk.model
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import moe.liar.utils.Option
-import moe.liar.utils.getOrElse
-import moe.liar.utils.none
-import moe.liar.utils.some
+import moe.liar.dusk.utils.Option
+import moe.liar.dusk.utils.getOrElse
+import moe.liar.dusk.utils.none
+import moe.liar.dusk.utils.some
 import java.io.File
 import kotlin.random.Random
 
@@ -44,7 +44,7 @@ object InternetRandomImgAPI {
 object LocalRandomBackground {
     private const val backgroundDir = "./resources/static/img/background/"
     private var cache: List<Resources> = listOf()
-    fun precache() = GlobalScope.launch(Dispatchers.IO) {
+    fun precacheAsync() = GlobalScope.async (Dispatchers.IO) {
         val dir = File(backgroundDir)
         val files = dir.listFiles().some()
         cache = files.getOrElse(arrayOf()).filter { it.isFile }.filter { isImg(it.name) }

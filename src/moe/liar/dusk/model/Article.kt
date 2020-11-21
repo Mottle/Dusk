@@ -1,8 +1,7 @@
-package moe.liar.model
+package moe.liar.dusk.model
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import moe.liar.utils.*
+import kotlinx.coroutines.*
+import moe.liar.dusk.utils.*
 import java.io.File
 import java.lang.Integer.min
 import java.text.SimpleDateFormat
@@ -48,22 +47,26 @@ private fun String.splitNoTitleContent(previewSize: Int) = this.substring(0, min
 
 object ArticleDAO {
     private var articles: List<Article> = listOf()
-    suspend fun refresh() = withContext(Dispatchers.IO) {
-        val dir = File("./resources/markdown/")
-        val files = dir.listFiles().some()
-        articles = files.getOrElse(arrayOf<File?>()).filter<File> { it.isFile }
-            .mapIndexed { id, file -> markdownToArticle(file, id) }.filter { !it.isNone() }
-            .map { it.forceGet()!! }.sortByDate().reversed()
+    fun refreshAsync() = GlobalScope.async (Dispatchers.IO) {
+        articles = forceRead("./resources/markdown/")
     }
 
     fun get(id: Int): Option<Article> = articles.find { it.articleId == id }.let {
         it?.some() ?: none()
     }
 
-    suspend fun getAll(): List<Article> {
-        refresh()
+    fun getAll(): List<Article> {
+        refreshAsync()
         return articles
     }
+}
+
+fun forceRead(path: String): List<Article> {
+    val dir = File(path)
+    val files = dir.listFiles().some()
+    return files.getOrElse(arrayOf<File?>()).filter { it.isFile }
+        .mapIndexed { id, file -> markdownToArticle(file, id) }.filter { !it.isNone() }
+        .map { it.forceGet()!! }.sortByDate().reversed()
 }
 
 private fun List<Article>.sortByDate() = this.sortedBy { it.date }

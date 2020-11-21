@@ -1,18 +1,18 @@
-package moe.liar.page
+package moe.liar.dusk.component
 
 import kotlinx.css.Color
 import kotlinx.css.LinearDimension
 import kotlinx.css.px
 import kotlinx.html.*
-import moe.liar.model.Article
-import moe.liar.model.CssRes
-import moe.liar.model.JsRes
-import moe.liar.utils.Option
-import moe.liar.utils.css
-import moe.liar.utils.none
-import moe.liar.utils.some
+import moe.liar.dusk.model.Article
+import moe.liar.dusk.model.CssRes
+import moe.liar.dusk.model.JsRes
+import moe.liar.dusk.utils.Option
+import moe.liar.dusk.utils.css
+import moe.liar.dusk.utils.none
+import moe.liar.dusk.utils.some
 
-class ArticleText private constructor(private val article: Article) : Page {
+class ArticleText private constructor(private val article: Article) : Component {
     class Builder(private val article: Option<Article> = none()) {
         fun setArticle(art: Article) = Builder(art.some())
         fun build() = ArticleText(article.forceGet() as Article)

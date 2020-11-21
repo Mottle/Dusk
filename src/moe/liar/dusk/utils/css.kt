@@ -1,4 +1,4 @@
-package moe.liar.utils
+package moe.liar.dusk.utils
 
 import kotlinx.css.CSSBuilder
 import kotlinx.html.STYLE

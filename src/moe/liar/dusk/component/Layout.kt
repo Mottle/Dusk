@@ -1,10 +1,10 @@
-package moe.liar.page
+package moe.liar.dusk.component
 
 import kotlinx.html.*
-import moe.liar.utils.Option
-import moe.liar.utils.map
+import moe.liar.dusk.utils.Option
+import moe.liar.dusk.utils.map
 
-interface Layout : (HTML, Page) -> Unit
+interface Layout : (HTML, Component) -> Unit
 
 class MainLayout(
     val static: Option<String>,
@@ -13,7 +13,7 @@ class MainLayout(
 ) : Layout {
 
 
-    override fun invoke(html: HTML, page: Page) = with(html) {
+    override fun invoke(html: HTML, component: Component) = with(html) {
         head {
             unsafe {
                 +"<meta charset=\"utf-8\" />"
@@ -27,10 +27,10 @@ class MainLayout(
                     styleLink("$it/css/$_style")
                 }
             }
-            page.head(this)
+            component.head(this)
         }
         body {
-            page.body(this)
+            component.body(this)
             static.map {
                 scripts.map { _script ->
                     script(src = "$it/js/$_script") {}
@@ -59,12 +59,7 @@ class MainLayout(
                 +"<script src=\"https://polyfill.io/v3/polyfill.min.js?features=es6\"></script>"
                 +"<script id=\"MathJax-script\" async src=\"https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js\"></script>"
             }
-            page.script(this)
+            component.script(this)
         }
     }
-}
-
-fun <P : Page> MainLayout.build(html: HTML, fn: () -> P) {
-    val page = fn()
-    this(html, page)
 }

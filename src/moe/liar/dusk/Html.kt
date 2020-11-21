@@ -1,3 +1,3 @@
-package moe.liar
+package moe.liar.dusk
 
 typealias Html = String
