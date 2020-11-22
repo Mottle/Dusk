@@ -18,10 +18,10 @@ class MainLayout(
             unsafe {
                 +"<meta charset=\"utf-8\" />"
                 +"<meta content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,\" name=\"viewport\" />"
+                +"<link href=\"https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css\" rel=\"stylesheet\">"
             }
             title("薄暮")
             static.map {
-                styleLink("$it/css/bootstrap.min.css")
                 styleLink("$it/css/fonts.css")
                 styles.map { _style ->
                     styleLink("$it/css/$_style")
@@ -35,13 +35,12 @@ class MainLayout(
                 scripts.map { _script ->
                     script(src = "$it/js/$_script") {}
                 }
-                script(src = "$it/js/anime.min.js") {}
             }
             unsafe {
                 +"<script src=\"https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js\" crossorigin=\"anonymous\"></script>"
                 +"<script src=\"https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js\" integrity=\"sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo\" crossorigin=\"anonymous\"></script>"
                 +"<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js\" integrity=\"sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI\" crossorigin=\"anonymous\"></script>"
-
+                +"<script src=\"https://cdn.bootcdn.net/ajax/libs/animejs/3.2.1/anime.min.js\"></script>"
                 +"""
                     <script>
                     MathJax = {

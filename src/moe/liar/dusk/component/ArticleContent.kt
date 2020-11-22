@@ -1,19 +1,18 @@
 package moe.liar.dusk.component
 
-import kotlinx.css.LinearDimension
-import kotlinx.css.TextAlign
+import kotlinx.css.*
 import kotlinx.css.properties.*
-import kotlinx.css.px
 import kotlinx.html.*
+import moe.liar.dusk.model.Article
 import moe.liar.dusk.model.ArticlePreview
 import moe.liar.dusk.utils.css
 import moe.liar.dusk.utils.getOrElse
 import moe.liar.dusk.utils.map
 
-class ArticleContent private constructor(private val data: List<ArticlePreview>) : Component {
-    class Builder(private val data: List<ArticlePreview> = listOf()) {
+class ArticleContent private constructor(private val data: List<Article>) : Component {
+    class Builder(private val data: List<Article> = listOf()) {
 
-        fun setArticlePreview(data: List<ArticlePreview>) = Builder(data)
+        fun setArticlePreview(data: List<Article>) = Builder(data)
         fun build(): ArticleContent = ArticleContent(data)
     }
 
@@ -48,8 +47,9 @@ class ArticleContent private constructor(private val data: List<ArticlePreview>)
                     height = 300.px
                 }
 
-                rule(".card-preview") {
-                    height = 100.px
+                rule(".card-body") {
+                    display = Display.flex
+                    flexDirection = FlexDirection.column
                 }
 
                 //中大型屏幕
@@ -93,16 +93,16 @@ class ArticleContent private constructor(private val data: List<ArticlePreview>)
  * 生成指定文章的card
  * 文章的url由id生成: /article/id
  */
-private fun HtmlBlockTag.articleCard(articlePreview: ArticlePreview) =
+private fun HtmlBlockTag.articleCard(article: Article) =
     with(this) {
-        val link = "/article/${articlePreview.articleId}"
+        val link = "/article/${article.articleId}"
         div("card shadow-sm") {
             div("row no-gutters") {
                 div("col-md-7 card-thumb") {
                     a(href = link) {
                         img(
                             classes = "card-img img-limit",
-                            src = articlePreview.imageRes.map { it.uri() }.getOrElse("")
+                            src = article.imageRes.map { it.uri() }.getOrElse("")
                         ) {
 //                            attributes["loading"] = "lazy"
                             attributes["style"] = "object-fit: cover"
@@ -112,21 +112,22 @@ private fun HtmlBlockTag.articleCard(articlePreview: ArticlePreview) =
                 div("col-md-5") {
                     div("card-body card-arrangement") {
                         attributes["style"] = "height: 300px"
-                        h5("card-title") { +articlePreview.title }
-                        p("card-text") { small("text-muted") { +articlePreview.formatDate() } }
+                        h5("card-title") { +article.title }
+                        p("card-text") { small("text-muted") { +article.formatDate() } }
                         p("card-text") {
-                            articlePreview.tags.forEach {
+                            article.tags.forEach {
                                 span("badge badge-light") { +it }
                             }
                         }
-                        div("card-text card-preview") {
-                            unsafe { +articlePreview.preview }
+                        div {
+                            attributes["style"] = "flex: 1;"
                         }
-                        a(link) {
+                        a(href = link) {
                             +"read more"
                         }
                     }
                 }
+
             }
         }
 

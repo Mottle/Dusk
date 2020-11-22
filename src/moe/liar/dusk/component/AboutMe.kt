@@ -5,7 +5,6 @@ import kotlinx.css.Float
 import kotlinx.html.*
 import moe.liar.dusk.model.Resources
 import moe.liar.dusk.utils.*
-import moe.liar.utils.*
 
 class AboutMe private constructor(private val avatar: Option<Resources>, private val name: Option<String>) : Component {
     data class Builder(private val avatar: Option<Resources> = none(), private val name: Option<String> = none()) {

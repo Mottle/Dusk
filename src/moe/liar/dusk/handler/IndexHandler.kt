@@ -13,13 +13,13 @@ import moe.liar.dusk.model.preview
 class IndexHandler : Handler<Component> {
     override suspend fun handle(): Component {
         val articles = ArticleDAO.getAll()
-        val articlePreviews = articles.map { it.preview(50) }
+//        val articlePreviews = articles.map { it.preview(0) }
 
         val navBar = NavBar.Builder().setLogo(ImgRes.path("logo.png")).build()
         val jumbotron = Jumbotron.Builder().setBackground(LocalRandomBackground.getRandom())
             .setMainTitle("Hello world").setSecondaryTitle("welcome to liar's blog").build()
         val goTop = GoTop()
-        val articleContent = ArticleContent.Builder().setArticlePreview(articlePreviews).build()
+        val articleContent = ArticleContent.Builder().setArticlePreview(articles).build()
         val footer = Footer()
         return combine(navBar, jumbotron, goTop, articleContent, footer)
     }

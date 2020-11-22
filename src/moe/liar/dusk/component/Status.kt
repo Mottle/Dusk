@@ -9,7 +9,6 @@ import kotlinx.html.div
 import kotlinx.html.style
 import moe.liar.dusk.model.Resources
 import moe.liar.dusk.utils.*
-import moe.liar.utils.*
 
 class Status private constructor(private val status: String, private val backgroundImg: Option<Resources>) : Component {
     data class Builder(private val status: String = "", private val background: Option<Resources> = none()) {

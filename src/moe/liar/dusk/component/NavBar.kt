@@ -10,7 +10,6 @@ import kotlinx.html.*
 import moe.liar.dusk.model.JsRes
 import moe.liar.dusk.model.Resources
 import moe.liar.dusk.utils.*
-import moe.liar.utils.*
 
 class NavBar private constructor(private val logo: Option<Resources>, private val forceShow: Boolean) : Component {
     data class Builder(private val logo: Option<Resources> = none(), private val forceShow: Boolean = false) {
