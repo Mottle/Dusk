@@ -20,6 +20,7 @@ import moe.liar.dusk.model.LocalRandomBackground
 import moe.liar.dusk.component.MainLayout
 import moe.liar.dusk.utils.some
 import org.slf4j.event.Level
+import java.io.File
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
@@ -47,6 +48,7 @@ fun Application.module(testing: Boolean = false) {
     }
     val layout = MainLayout("/static".some(), listOf(), listOf("animation.css"))
     routing {
+
         get<IndexHandler> { handler ->
             val page = handler.handle()
             call.respondHtml {
@@ -76,7 +78,8 @@ fun Application.module(testing: Boolean = false) {
         }
 
         static("/static") {
-            resources("static")
+            staticRootFolder = File("./web-resource/static/")
+            files(".")
         }
         get("/favicon.ico") {
             log.info("log for ic")

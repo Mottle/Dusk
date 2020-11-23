@@ -42,7 +42,7 @@ object InternetRandomImgAPI {
 }
 
 object LocalRandomBackground {
-    private const val backgroundDir = "./resources/static/img/background/"
+    private const val backgroundDir = "./web-resource/static/img/background/"
     private var cache: List<Resources> = listOf()
     fun precacheAsync() = GlobalScope.async (Dispatchers.IO) {
         val dir = File(backgroundDir)

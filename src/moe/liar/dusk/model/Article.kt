@@ -48,7 +48,7 @@ private fun String.splitNoTitleContent(previewSize: Int) = this.substring(0, min
 object ArticleDAO {
     private var articles: List<Article> = listOf()
     fun refreshAsync() = GlobalScope.async (Dispatchers.IO) {
-        articles = forceRead("./resources/markdown/")
+        articles = forceRead("./web-resource/markdown/")
     }
 
     fun get(id: Int): Option<Article> = articles.find { it.articleId == id }.let {

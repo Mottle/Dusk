@@ -61,3 +61,15 @@ enum class HttpStatusCode(val code: Int, val info: String) {
     NotExtended(510, "Not Extended"),
     NetworkAuthenticationRequired(511, "Network Authentication Required"),
 }
+
+enum class HttpContentType(val value: String) {
+    Html("text/html"),
+    Plain("text/plain"),
+    Xml("text/xml"),
+    Gif("image/gif"),
+    Jpeg("image/jpeg"),
+    Png("image/png"),
+    Json("application/json"),
+    MultiPartForm("multipart/form-data"),
+    Form("application/x-www-form-urlencoded")
+}
