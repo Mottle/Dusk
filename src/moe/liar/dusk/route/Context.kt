@@ -1,7 +1,7 @@
 package moe.liar.dusk.route
 
 import kotlinx.coroutines.Deferred
-import moe.liar.dusk.utils.Multimap
+import moe.liar.dusk.utils.MultiMap
 
 interface Context {
     val request: RequestContext
@@ -10,13 +10,13 @@ interface Context {
 
 interface RequestContext {
     fun uri(): String
-    fun headers(): Multimap<String, String>
+    fun headers(): MultiMap<String, String>
 }
 
 interface ResponseContext {
-    fun headers(): Multimap<String, String>
+    fun headers(): MultiMap<String, String>
     fun header(key: String, value: String)
     fun status(): HttpStatusCode
     fun status(code: HttpStatusCode)
-    fun respondAsync(buffer: ByteArray, contentType: HttpContentType): Deferred<Unit>
+    suspend fun respond(buffer: ByteArray, statusCode: HttpStatusCode, contentType: HttpContentType)
 }

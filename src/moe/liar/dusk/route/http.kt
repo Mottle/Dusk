@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package moe.liar.dusk.route
 
 enum class HttpMethod {

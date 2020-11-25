@@ -1,12 +1,16 @@
 package moe.liar.dusk.route.adapter
 
 import io.ktor.application.*
+import io.ktor.http.*
 import io.ktor.request.*
+import io.ktor.response.*
 import io.ktor.util.*
 import kotlinx.coroutines.Deferred
 import moe.liar.dusk.route.*
-import moe.liar.dusk.utils.Multimap
-import moe.liar.dusk.utils.multimapOf
+import moe.liar.dusk.route.HttpStatusCode
+import moe.liar.dusk.utils.MultiMap
+import moe.liar.dusk.utils.add
+import moe.liar.dusk.utils.multiMapOf
 
 class KtorContext(override val request: RequestContext,
                   override val response: ResponseContext) : Context
@@ -14,36 +18,39 @@ class KtorContext(override val request: RequestContext,
 class KtorRequestContext(private val call: ApplicationCall) : RequestContext {
     override fun uri(): String = call.request.uri
 
-    override fun headers(): Multimap<String, String> = call.request.headers.toMap().map { entry ->
-        val mutableSet = mutableSetOf<String>()
-        entry.value.forEach {
-            mutableSet.add(it)
-        }
-        return@map Pair(entry.key, mutableSet)
-    }.fold(multimapOf()) { mp, entry ->
-        mp[entry.first] = entry.second
-        return@fold mp
+    override fun headers(): MultiMap<String, String> = call.request.headers.toMultiMap()
+}
+
+internal fun Headers.toMultiMap(): MultiMap<String, String> = toMap().map { entry ->
+    val mutableSet = mutableSetOf<String>()
+    entry.value.forEach {
+        mutableSet.add(it)
     }
+    return@map Pair(entry.key, mutableSet)
+}.fold(multiMapOf<String, String>()) { mp, entry ->
+    mp[entry.first] = entry.second
+    return@fold mp
 }
 
 class KtorResponseContext(private val call: ApplicationCall) : ResponseContext {
-    override fun headers(): Multimap<String, String> {
-        TODO("Not yet implemented")
-    }
+    private var headers = multiMapOf<String, String>()
+    private var statusCode = HttpStatusCode.Ok
+    override fun headers(): MultiMap<String, String> = headers
 
     override fun header(key: String, value: String) {
-        TODO("Not yet implemented")
+        headers.add(key, value)
     }
 
-    override fun status(): HttpStatusCode {
-        TODO("Not yet implemented")
-    }
+    override fun status(): HttpStatusCode = statusCode
 
     override fun status(code: HttpStatusCode) {
-        TODO("Not yet implemented")
+        statusCode = code
     }
 
-    override fun respondAsync(buffer: ByteArray, contentType: HttpContentType): Deferred<Unit> {
-        TODO("Not yet implemented")
+    override suspend fun respond( buffer: ByteArray, statusCode: HttpStatusCode, contentType: HttpContentType) {
+        val contents = contentType.value.split("/")
+        val type = contents.first()
+        val subType = contents[1]
+        call.respondBytes(buffer, ContentType(type, subType), io.ktor.http.HttpStatusCode(statusCode.code, statusCode.info))
     }
 }
