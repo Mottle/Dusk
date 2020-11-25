@@ -68,7 +68,7 @@ class KtorResponseContext(private val call: ApplicationCall) : ResponseContext {
 
 suspend fun ResponseContext.respondHtml(fn: (HTML).() -> Unit) {
     val htmlText = html(fn)
-    respond(htmlText.toByteArray(), HttpStatusCode.Accepted, HttpContentType.Html)
+    respond(htmlText.toByteArray(), HttpStatusCode.Ok, HttpContentType.Html)
 }
 
 class KtorRouter(app: Application) : Router {
