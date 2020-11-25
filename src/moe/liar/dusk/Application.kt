@@ -47,6 +47,7 @@ fun Application.module(testing: Boolean = false) {
         LocalRandomBackground.precacheAsync().await()
     }
     val layout = MainLayout("/static".some(), listOf(), listOf("animation.css"))
+
     routing {
 
         get<IndexHandler> { handler ->
