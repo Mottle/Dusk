@@ -16,8 +16,12 @@ import com.vladsch.flexmark.util.html.MutableAttributes
 typealias RowMarkdown = String
 
 data class Markdown(private val markdownText: RowMarkdown) {
-    private val option = MutableDataSet().set(Parser.EXTENSIONS, listOf(StrikethroughSubscriptExtension.create(),
-        ArticleExtension.create()))
+    private val option = MutableDataSet().set(
+        Parser.EXTENSIONS, listOf(
+            StrikethroughSubscriptExtension.create(),
+            ArticleExtension.create()
+        )
+    )
     private val parser = Parser.builder(option).build()
     private val renderer = HtmlRenderer.builder(option).build()
     private val document = lazy { parser.parse(markdownText) }
@@ -62,7 +66,7 @@ private class ArticleAttributeProvider : AttributeProvider {
     }
 
     override fun setAttributes(node: Node, part: AttributablePart, attributes: MutableAttributes) {
-        if(node is FencedCodeBlock) {
+        if (node is FencedCodeBlock) {
             attributes.addValue("class", "line-numbers")
             attributes.addValue("class", "match-braces")
             attributes.addValue("class", "rainbow-braces")

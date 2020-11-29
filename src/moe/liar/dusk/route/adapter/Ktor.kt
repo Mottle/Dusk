@@ -2,24 +2,26 @@ package moe.liar.dusk.route.adapter
 
 import io.ktor.application.*
 import io.ktor.http.*
-import io.ktor.locations.*
+import io.ktor.http.content.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.routing.get
 import io.ktor.util.*
 import io.ktor.util.pipeline.*
-import kotlinx.coroutines.Deferred
-import kotlinx.html.HTML
-import kotlinx.html.html
-import kotlinx.html.stream.appendHTML
 import moe.liar.dusk.route.*
 import moe.liar.dusk.route.HttpMethod
 import moe.liar.dusk.route.HttpStatusCode
 import moe.liar.dusk.utils.MultiMap
 import moe.liar.dusk.utils.add
-import moe.liar.dusk.utils.html
 import moe.liar.dusk.utils.multiMapOf
+import java.io.File
+import kotlin.collections.first
+import kotlin.collections.fold
+import kotlin.collections.forEach
+import kotlin.collections.map
+import kotlin.collections.mutableSetOf
+import kotlin.collections.set
 
 class KtorContext(call: ApplicationCall) : Context {
     override val request: RequestContext = KtorRequestContext(call)
@@ -58,23 +60,22 @@ class KtorResponseContext(private val call: ApplicationCall) : ResponseContext {
         statusCode = code
     }
 
-    override suspend fun respond( buffer: ByteArray, statusCode: HttpStatusCode, contentType: HttpContentType) {
+    override suspend fun respond(buffer: ByteArray, statusCode: HttpStatusCode, contentType: HttpContentType) {
         val contents = contentType.value.split("/")
         val type = contents.first()
         val subType = contents[1]
-        call.respondBytes(buffer, ContentType(type, subType), io.ktor.http.HttpStatusCode(statusCode.code, statusCode.info))
+        call.respondBytes(
+            buffer,
+            ContentType(type, subType),
+            io.ktor.http.HttpStatusCode(statusCode.code, statusCode.info)
+        )
     }
 }
 
-suspend fun ResponseContext.respondHtml(fn: (HTML).() -> Unit) {
-    val htmlText = html(fn)
-    respond(htmlText.toByteArray(), HttpStatusCode.Ok, HttpContentType.Html)
-}
-
 class KtorRouter(app: Application) : Router {
-    private val ktorRouter = app.routing {}
+    val ktorRouter = app.routing {}
     override suspend fun route(method: HttpMethod, path: String, callback: suspend Context.() -> Unit) {
-        val met: (String, PipelineInterceptor<Unit, ApplicationCall>) -> Route = when(method) {
+        val met: (String, PipelineInterceptor<Unit, ApplicationCall>) -> Route = when (method) {
             HttpMethod.GET -> ktorRouter::get
             HttpMethod.POST -> ktorRouter::post
             HttpMethod.PUT -> ktorRouter::put
@@ -88,5 +89,13 @@ class KtorRouter(app: Application) : Router {
             val context = KtorContext(call)
             callback(context)
         }
+    }
+}
+
+fun Router.static(path: String) {
+    this as KtorRouter
+    this.ktorRouter.static {
+        staticRootFolder = File(path)
+        files(".")
     }
 }

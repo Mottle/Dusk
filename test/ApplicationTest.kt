@@ -11,7 +11,7 @@ import kotlin.test.assertEquals
 class ApplicationTest {
     @KtorExperimentalLocationsAPI
     @Test
-   fun testRoot() {
+    fun testRoot() {
         withTestApplication({ runBlocking { module(testing = true) } }) {
             handleRequest(HttpMethod.Get, "/").apply {
                 assertEquals(HttpStatusCode.OK, response.status())

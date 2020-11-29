@@ -1,10 +1,12 @@
 package moe.liar.dusk.component
 
 import kotlinx.css.*
-import kotlinx.css.properties.*
+import kotlinx.css.properties.s
+import kotlinx.css.properties.scale
+import kotlinx.css.properties.transform
+import kotlinx.css.properties.transition
 import kotlinx.html.*
 import moe.liar.dusk.model.Article
-import moe.liar.dusk.model.ArticlePreview
 import moe.liar.dusk.utils.css
 import moe.liar.dusk.utils.getOrElse
 import moe.liar.dusk.utils.map

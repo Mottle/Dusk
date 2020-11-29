@@ -1,6 +1,8 @@
 package moe.liar.dusk.model
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import moe.liar.dusk.utils.*
 import java.io.File
 import java.lang.Integer.min
@@ -47,7 +49,7 @@ private fun String.splitNoTitleContent(previewSize: Int) = this.substring(0, min
 
 object ArticleDAO {
     private var articles: List<Article> = listOf()
-    fun refreshAsync() = GlobalScope.async (Dispatchers.IO) {
+    fun refreshAsync() = GlobalScope.async(Dispatchers.IO) {
         articles = forceRead("./web-resource/markdown/")
     }
 

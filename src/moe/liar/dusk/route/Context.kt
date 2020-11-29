@@ -1,7 +1,8 @@
 package moe.liar.dusk.route
 
-import kotlinx.coroutines.Deferred
+import kotlinx.html.HTML
 import moe.liar.dusk.utils.MultiMap
+import moe.liar.dusk.utils.html
 
 interface Context {
     val request: RequestContext
@@ -19,4 +20,9 @@ interface ResponseContext {
     fun status(): HttpStatusCode
     fun status(code: HttpStatusCode)
     suspend fun respond(buffer: ByteArray, statusCode: HttpStatusCode, contentType: HttpContentType)
+}
+
+suspend fun ResponseContext.respondHtml(fn: (HTML).() -> Unit) {
+    val htmlText = html(fn)
+    respond(htmlText.toByteArray(), HttpStatusCode.Ok, HttpContentType.Html)
 }

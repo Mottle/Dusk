@@ -1,19 +1,14 @@
 package moe.liar.dusk.route.adapter
 
 import io.ktor.application.*
-import io.ktor.features.*
 import io.ktor.http.*
 import io.ktor.locations.*
-import io.ktor.request.*
 import io.ktor.server.testing.*
 import kotlinx.coroutines.runBlocking
-import kotlinx.css.div
 import kotlinx.html.body
 import kotlinx.html.div
-import moe.liar.dusk.module
 import moe.liar.dusk.utils.html
 import moe.liar.dusk.utils.multiMapOf
-import org.slf4j.event.Level
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

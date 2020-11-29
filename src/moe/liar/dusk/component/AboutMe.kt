@@ -22,7 +22,7 @@ class AboutMe private constructor(private val avatar: Option<Resources>, private
                 div("row") {
                     div("col-6") {
                         avatar.map {
-                            img(src = it.uri(),classes = "avatar shadow")
+                            img(src = it.uri(), classes = "avatar shadow")
                         }
                     }
                     div("col-6 name-row") {

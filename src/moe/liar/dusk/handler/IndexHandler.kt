@@ -5,7 +5,6 @@ import moe.liar.dusk.component.*
 import moe.liar.dusk.model.ArticleDAO
 import moe.liar.dusk.model.ImgRes
 import moe.liar.dusk.model.LocalRandomBackground
-import moe.liar.dusk.model.preview
 
 
 @KtorExperimentalLocationsAPI

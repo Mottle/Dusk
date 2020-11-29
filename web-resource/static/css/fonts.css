@@ -1,7 +1,7 @@
 @font-face {
     font-family: Sarasa;
     src: url("/static/fonts/sarasa-mono-sc-regular.ttf") format("ttf"),
-        url("/static/fonts/sarasa-mono-sc-light.ttf");
+    url("/static/fonts/sarasa-mono-sc-light.ttf");
     font-weight: 400;
     font-style: normal;
     font-stretch: normal;

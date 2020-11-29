@@ -6,7 +6,7 @@ import kotlinx.html.stream.appendHTML
 
 fun html(fn: (HTML).() -> Unit): String = buildString {
     appendLine("<!DOCTYPE html>")
-    appendHTML().html{
+    appendHTML().html {
         fn(this)
     }
     appendLine()

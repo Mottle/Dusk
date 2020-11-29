@@ -59,6 +59,6 @@ class ArticleText private constructor(private val article: Article) : Component 
 
     override fun script(htmlBody: BODY) = with(htmlBody) {
         script(src = JsRes.path("prism.js").uri()) {}
-        script(src = JsRes.path("codepanel.js").uri()){}
+        script(src = JsRes.path("codepanel.js").uri()) {}
     }
 }

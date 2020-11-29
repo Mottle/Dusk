@@ -3,7 +3,6 @@ package moe.liar.dusk.model
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 import moe.liar.dusk.utils.Option
 import moe.liar.dusk.utils.getOrElse
 import moe.liar.dusk.utils.none
@@ -37,14 +36,14 @@ val IconSvgRes = Static("/static/img/icon/svg/")
 val BackgroundRes = Static("/static/img/background/")
 
 object InternetRandomImgAPI {
-//    fun link(size: Int = 1) = Link("https://random.52ecy.cn/randbg.php/${Random.nextInt()}?size=$size")
+    //    fun link(size: Int = 1) = Link("https://random.52ecy.cn/randbg.php/${Random.nextInt()}?size=$size")
     fun link(size: Int = 2) = Link("https://random.52ecy.cn/randbg.php/${Random.nextInt()}?type=302&size=$size")
 }
 
 object LocalRandomBackground {
     private const val backgroundDir = "./web-resource/static/img/background/"
     private var cache: List<Resources> = listOf()
-    fun precacheAsync() = GlobalScope.async (Dispatchers.IO) {
+    fun precacheAsync() = GlobalScope.async(Dispatchers.IO) {
         val dir = File(backgroundDir)
         val files = dir.listFiles().some()
         cache = files.getOrElse(arrayOf()).filter { it.isFile }.filter { isImg(it.name) }
