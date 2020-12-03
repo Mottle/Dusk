@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "moe.liar"
-version = "1.1.1"
+version = "1.1.2"
 
 application {
     mainClassName = "io.ktor.server.netty.EngineMain"

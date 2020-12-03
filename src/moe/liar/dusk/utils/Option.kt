@@ -1,17 +1,19 @@
 package moe.liar.dusk.utils
 
 interface Option<out T> {
-    fun forceGet(): T?
+    fun forceGet(): T
     fun isNone(): Boolean
 }
 
 object None : Option<Nothing> {
-    override fun forceGet(): Nothing? = null
+    override fun forceGet(): Nothing {
+        throw NullPointerException()
+    }
     override fun isNone(): Boolean = true
 }
 
 data class Some<out T>(val value: T) : Option<T> {
-    override fun forceGet(): T? = value
+    override fun forceGet(): T = value
     override fun isNone(): Boolean = false
 }
 

@@ -68,7 +68,7 @@ fun forceRead(path: String): List<Article> {
     val files = dir.listFiles().some()
     return files.getOrElse(arrayOf<File?>()).filter { it.isFile }
         .mapIndexed { id, file -> markdownToArticle(file, id) }.filter { !it.isNone() }
-        .map { it.forceGet()!! }.sortByDate().reversed()
+        .map { it.forceGet() }.sortByDate().reversed()
 }
 
 private fun List<Article>.sortByDate() = this.sortedBy { it.date }

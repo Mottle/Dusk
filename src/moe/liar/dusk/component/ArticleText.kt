@@ -15,7 +15,7 @@ import moe.liar.dusk.utils.some
 class ArticleText private constructor(private val article: Article) : Component {
     class Builder(private val article: Option<Article> = none()) {
         fun setArticle(art: Article) = Builder(art.some())
-        fun build() = ArticleText(article.forceGet() as Article)
+        fun build() = ArticleText(article.forceGet() )
     }
 
     override fun head(htmlHead: HEAD) = with(htmlHead) {

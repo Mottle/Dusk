@@ -12,9 +12,7 @@ import io.ktor.util.pipeline.*
 import moe.liar.dusk.route.*
 import moe.liar.dusk.route.HttpMethod
 import moe.liar.dusk.route.HttpStatusCode
-import moe.liar.dusk.utils.MultiMap
-import moe.liar.dusk.utils.add
-import moe.liar.dusk.utils.multiMapOf
+import moe.liar.dusk.utils.*
 import java.io.File
 import kotlin.collections.first
 import kotlin.collections.fold
@@ -23,15 +21,22 @@ import kotlin.collections.map
 import kotlin.collections.mutableSetOf
 import kotlin.collections.set
 
-class KtorContext(call: ApplicationCall) : Context {
+class KtorContext(val call: ApplicationCall) : Context {
     override val request: RequestContext = KtorRequestContext(call)
     override val response: ResponseContext = KtorResponseContext(call)
 }
 
-class KtorRequestContext(private val call: ApplicationCall) : RequestContext {
+class KtorRequestContext(val call: ApplicationCall) : RequestContext {
     override fun uri(): String = call.request.uri
 
     override fun headers(): MultiMap<String, String> = call.request.headers.toMultiMap()
+}
+
+fun RequestContext.param(name: String): Option<String> {
+    this as KtorRequestContext
+    return call.parameters[name].let {
+        it ?.some() ?: none()
+    }
 }
 
 internal fun Headers.toMultiMap(): MultiMap<String, String> = toMap().map { entry ->
@@ -45,7 +50,7 @@ internal fun Headers.toMultiMap(): MultiMap<String, String> = toMap().map { entr
     return@fold mp
 }
 
-class KtorResponseContext(private val call: ApplicationCall) : ResponseContext {
+class KtorResponseContext(val call: ApplicationCall) : ResponseContext {
     private var headers = multiMapOf<String, String>()
     private var statusCode = HttpStatusCode.Ok
     override fun headers(): MultiMap<String, String> = headers
@@ -72,6 +77,11 @@ class KtorResponseContext(private val call: ApplicationCall) : ResponseContext {
     }
 }
 
+suspend fun ResponseContext.redirect(to: String) {
+    this as KtorResponseContext
+    call.respondRedirect(to)
+}
+
 class KtorRouter(app: Application) : Router {
     val ktorRouter = app.routing {}
     override suspend fun route(method: HttpMethod, path: String, callback: suspend Context.() -> Unit) {
@@ -92,9 +102,9 @@ class KtorRouter(app: Application) : Router {
     }
 }
 
-fun Router.static(path: String) {
+fun Router.static(remote: String, path: String) {
     this as KtorRouter
-    this.ktorRouter.static {
+    this.ktorRouter.static(remote) {
         staticRootFolder = File(path)
         files(".")
     }

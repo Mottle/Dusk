@@ -196,7 +196,7 @@ A **one-to-one function** is a function that **maps different points to differen
 >Definition 1.3.5 
 >
 >Let $f$ be a function from a set $X$ into a set $Y$. If S is any subset of $Y$ , then the set $f^{-1}(S)$ is defined by
->$$f^{-1}(S)=\{x:x \in X~~and~~f(x) \in S\}$$
+>$$f^{-1}(S)=\{x:x \in X \space and \space f(x) \in S\}$$
 >The subset $f^{-1}(S)$ of $X$ is said to be the inverse image of $S$.
 
 Note that an inverse function of $f : X \to Y$ exists if and only if $f$ is bijective. But the inverse image of any subset of $Y$ exists even if $f$ is neither one-to-one nor onto.

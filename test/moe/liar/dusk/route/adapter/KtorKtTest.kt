@@ -7,6 +7,7 @@ import io.ktor.server.testing.*
 import kotlinx.coroutines.runBlocking
 import kotlinx.html.body
 import kotlinx.html.div
+import moe.liar.dusk.route.respondHtml
 import moe.liar.dusk.utils.html
 import moe.liar.dusk.utils.multiMapOf
 import kotlin.test.Test
